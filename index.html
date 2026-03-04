@@ -5,597 +5,2095 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Workshop | ML & Deep Learning</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['Playfair Display', 'serif'],
-                        body: ['DM Sans', 'sans-serif'],
-                        arabic: ['Tajawal', 'sans-serif'],
-                    },
-                    colors: {
-                        midnight: '#0a0e27',
-                        ocean: { 50: '#eef6ff', 100: '#d9ecff', 200: '#bcdcff', 300: '#8ec5ff', 400: '#59a3ff', 500: '#3380ff', 600: '#1a5ff5', 700: '#144ae0', 800: '#173db5', 900: '#1a388e' },
-                        royal: { 50: '#f5f0ff', 100: '#ede5ff', 200: '#dcceff', 300: '#c4a8ff', 400: '#a574ff', 500: '#8b3dff', 600: '#7916f7', 700: '#6b0ae3', 800: '#5a0bbf', 900: '#4b0d9c' },
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* ---- Base ---- */
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: #f7f8fc; overflow-x: hidden; }
-        [data-lang="ar"] body, html[dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
+        /* ============================================
+           DESIGN SYSTEM — Scientific Editorial
+           ============================================ */
 
-        /* ---- Language switch ---- */
+        :root {
+            --bg-deep:      #08090e;
+            --bg-surface:   #0d0f17;
+            --bg-card:      #12141f;
+            --bg-elevated:  #181b29;
+            --border:       rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+
+            --text-primary:   #e8eaf0;
+            --text-secondary: #8b90a5;
+            --text-muted:     #555a70;
+
+            --accent-cyan:    #22d3ee;
+            --accent-teal:    #14b8a6;
+            --accent-gold:    #f59e0b;
+            --accent-rose:    #f43f5e;
+            --accent-violet:  #8b5cf6;
+            --accent-blue:    #3b82f6;
+
+            --glow-cyan:   rgba(34,211,238,0.15);
+            --glow-teal:   rgba(20,184,166,0.12);
+            --glow-violet: rgba(139,92,246,0.12);
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-2xl: 36px;
+
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body:    'Outfit', sans-serif;
+            --font-arabic:  'Tajawal', sans-serif;
+            --font-mono:    'JetBrains Mono', monospace;
+
+            /* Apple-style layered shadows */
+            --shadow-card:
+                0 0 0 1px rgba(255,255,255,0.04),
+                0 1px 2px rgba(0,0,0,0.2),
+                0 4px 8px rgba(0,0,0,0.15),
+                0 12px 28px rgba(0,0,0,0.2);
+            --shadow-card-hover:
+                0 0 0 1px rgba(255,255,255,0.07),
+                0 2px 4px rgba(0,0,0,0.15),
+                0 8px 20px rgba(0,0,0,0.2),
+                0 24px 56px rgba(0,0,0,0.25);
+            --shadow-float:
+                0 0 0 1px rgba(255,255,255,0.05),
+                0 4px 12px rgba(0,0,0,0.15),
+                0 20px 48px -8px rgba(0,0,0,0.3);
+        }
+
+        /* ============================================
+           LIGHT THEME — Apple Refined
+           ============================================ */
+        html[data-theme="light"] {
+            --bg-deep:      #f2f2f7;
+            --bg-surface:   #e5e5ea;
+            --bg-card:      #ffffff;
+            --bg-elevated:  #ffffff;
+            --border:       rgba(0,0,0,0.08);
+            --border-hover: rgba(0,0,0,0.15);
+
+            --text-primary:   #1a1a1a;
+            --text-secondary: #48484a;
+            --text-muted:     #8e8e93;
+
+            --accent-cyan:    #0077b6;
+            --accent-teal:    #0a8f7f;
+            --accent-gold:    #b87508;
+            --accent-rose:    #c0123b;
+            --accent-violet:  #6d28d9;
+            --accent-blue:    #1d4ed8;
+
+            --glow-cyan:   rgba(0,119,182,0.1);
+            --glow-teal:   rgba(10,143,127,0.08);
+            --glow-violet: rgba(109,40,217,0.08);
+
+            --shadow-card:
+                0 0 0 1px rgba(0,0,0,0.05),
+                0 1px 3px rgba(0,0,0,0.06),
+                0 4px 14px rgba(0,0,0,0.07),
+                0 10px 30px rgba(0,0,0,0.05);
+            --shadow-card-hover:
+                0 0 0 1px rgba(0,0,0,0.07),
+                0 2px 6px rgba(0,0,0,0.06),
+                0 10px 28px rgba(0,0,0,0.09),
+                0 20px 52px rgba(0,0,0,0.07);
+            --shadow-float:
+                0 0 0 1px rgba(0,0,0,0.06),
+                0 4px 16px rgba(0,0,0,0.07),
+                0 20px 48px -4px rgba(0,0,0,0.1);
+        }
+
+        /* ---- Light Theme: Global Transitions ---- */
+        html.theme-transitioning,
+        html.theme-transitioning *,
+        html.theme-transitioning *::before,
+        html.theme-transitioning *::after {
+            transition: background-color 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                        color 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                        border-color 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                        background 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                        opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1) !important;
+        }
+
+        /* ---- Light Theme: Dot Grid ---- */
+        html[data-theme="light"] .dot-grid {
+            background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+        }
+
+        /* ---- Light Theme: Grain ---- */
+        html[data-theme="light"] .grain::before {
+            opacity: 0.018;
+        }
+
+        /* ---- Light Theme: Orbs ---- */
+        html[data-theme="light"] .orb {
+            opacity: 0.5;
+            filter: blur(130px);
+        }
+
+        /* ---- Light Theme: Scrollbar ---- */
+        html[data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #c7c7cc; }
+        html[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
+        /* ---- Light Theme: Badge ---- */
+        html[data-theme="light"] .badge {
+            background: rgba(0,119,182,0.09);
+            border-color: rgba(0,119,182,0.25);
+            color: var(--accent-cyan);
+        }
+
+        /* ---- Light Theme: Section Label ---- */
+        html[data-theme="light"] .section-label::before {
+            background: var(--accent-cyan);
+        }
+
+        /* ---- Light Theme: Section Divider ---- */
+        html[data-theme="light"] .section-divider {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+        }
+
+        /* ---- Light Theme: Info Chips ---- */
+        html[data-theme="light"] .info-chip {
+            background: rgba(255,255,255,0.7);
+            border-color: rgba(0,0,0,0.1);
+            color: var(--text-secondary);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        /* ---- Light Theme: Apple Panels ---- */
+        html[data-theme="light"] .apple-panel {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.08);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .apple-panel:hover {
+            border-color: rgba(0,119,182,0.18);
+        }
+        html[data-theme="light"] .apple-panel::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.03), transparent);
+        }
+
+        /* ---- Light Theme: Apple Stat Cards ---- */
+        html[data-theme="light"] .apple-stat {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.08);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .apple-stat:hover {
+            border-color: rgba(0,0,0,0.12);
+        }
+        html[data-theme="light"] .apple-stat.cyan:hover {
+            border-color: rgba(0,119,182,0.2);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(0,119,182,0.03) 100%);
+        }
+        html[data-theme="light"] .apple-stat.rose:hover {
+            border-color: rgba(192,18,59,0.2);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(192,18,59,0.03) 100%);
+        }
+        html[data-theme="light"] .apple-stat.gold:hover {
+            border-color: rgba(184,117,8,0.2);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(184,117,8,0.03) 100%);
+        }
+        html[data-theme="light"] .apple-stat.violet:hover {
+            border-color: rgba(109,40,217,0.2);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(109,40,217,0.03) 100%);
+        }
+        html[data-theme="light"] .apple-stat::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.025), transparent);
+        }
+        html[data-theme="light"] .apple-stat::after {
+            opacity: 0.15;
+        }
+        html[data-theme="light"] .apple-stat:hover::after {
+            opacity: 0.25;
+        }
+
+        /* ---- Light Theme: Stat Icons ---- */
+        html[data-theme="light"] .apple-stat-icon.cyan {
+            background: rgba(0,119,182,0.1);
+            box-shadow: 0 0 0 1px rgba(0,119,182,0.12), 0 2px 8px rgba(0,119,182,0.08);
+        }
+        html[data-theme="light"] .apple-stat:hover .apple-stat-icon.cyan {
+            background: rgba(0,119,182,0.14);
+            box-shadow: 0 0 0 1px rgba(0,119,182,0.22), 0 4px 16px rgba(0,119,182,0.12);
+        }
+        html[data-theme="light"] .apple-stat-icon.rose {
+            background: rgba(192,18,59,0.09);
+            box-shadow: 0 0 0 1px rgba(192,18,59,0.1), 0 2px 8px rgba(192,18,59,0.06);
+        }
+        html[data-theme="light"] .apple-stat:hover .apple-stat-icon.rose {
+            background: rgba(192,18,59,0.13);
+            box-shadow: 0 0 0 1px rgba(192,18,59,0.2), 0 4px 16px rgba(192,18,59,0.1);
+        }
+        html[data-theme="light"] .apple-stat-icon.gold {
+            background: rgba(184,117,8,0.09);
+            box-shadow: 0 0 0 1px rgba(184,117,8,0.1), 0 2px 8px rgba(184,117,8,0.06);
+        }
+        html[data-theme="light"] .apple-stat:hover .apple-stat-icon.gold {
+            background: rgba(184,117,8,0.13);
+            box-shadow: 0 0 0 1px rgba(184,117,8,0.2), 0 4px 16px rgba(184,117,8,0.1);
+        }
+        html[data-theme="light"] .apple-stat-icon.violet {
+            background: rgba(109,40,217,0.09);
+            box-shadow: 0 0 0 1px rgba(109,40,217,0.1), 0 2px 8px rgba(109,40,217,0.06);
+        }
+        html[data-theme="light"] .apple-stat:hover .apple-stat-icon.violet {
+            background: rgba(109,40,217,0.13);
+            box-shadow: 0 0 0 1px rgba(109,40,217,0.2), 0 4px 16px rgba(109,40,217,0.1);
+        }
+
+        /* ---- Light Theme: Pill Buttons ---- */
+        html[data-theme="light"] .apple-pill-btn.cyan-fill {
+            background: linear-gradient(135deg, #0077b6, #0a8f7f);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,119,182,0.2);
+        }
+        html[data-theme="light"] .apple-pill-btn.cyan-fill:hover {
+            box-shadow: 0 6px 22px rgba(0,119,182,0.3);
+        }
+        html[data-theme="light"] .apple-pill-btn.rose-fill {
+            background: linear-gradient(135deg, #c0123b, #a21030);
+            box-shadow: 0 2px 8px rgba(192,18,59,0.18);
+        }
+        html[data-theme="light"] .apple-pill-btn.rose-fill:hover {
+            box-shadow: 0 6px 22px rgba(192,18,59,0.28);
+        }
+        html[data-theme="light"] .apple-pill-btn.ghost {
+            background: rgba(0,0,0,0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(0,0,0,0.12);
+        }
+        html[data-theme="light"] .apple-pill-btn.ghost:hover {
+            background: rgba(0,0,0,0.08);
+            border-color: rgba(0,0,0,0.2);
+        }
+
+        /* ---- Light Theme: Contact Pills ---- */
+        html[data-theme="light"] .contact-pill.gold   { background: rgba(184,117,8,0.1); }
+        html[data-theme="light"] .contact-pill.blue   { background: rgba(29,78,216,0.1); }
+        html[data-theme="light"] .contact-pill.violet  { background: rgba(109,40,217,0.1); }
+        html[data-theme="light"] .contact-pill.gold:hover   { background: rgba(184,117,8,0.18); }
+        html[data-theme="light"] .contact-pill.blue:hover   { background: rgba(29,78,216,0.18); }
+        html[data-theme="light"] .contact-pill.violet:hover  { background: rgba(109,40,217,0.18); }
+
+        /* ---- Light Theme: Feature Cards ---- */
+        html[data-theme="light"] .apple-feature {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.08);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .apple-feature::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.025), transparent);
+        }
+        html[data-theme="light"] .apple-feature:hover {
+            border-color: rgba(0,119,182,0.22);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(0,119,182,0.025) 100%);
+        }
+        html[data-theme="light"] .apple-feature-icon {
+            background: rgba(0,119,182,0.08);
+            box-shadow: 0 0 0 1px rgba(0,119,182,0.1);
+        }
+        html[data-theme="light"] .apple-feature:hover .apple-feature-icon {
+            background: rgba(0,119,182,0.13);
+            box-shadow: 0 0 0 1px rgba(0,119,182,0.18), 0 4px 14px rgba(0,119,182,0.1);
+        }
+
+        /* ---- Light Theme: Prereq Items ---- */
+        html[data-theme="light"] .apple-prereq {
+            background: rgba(0,0,0,0.025);
+            border-color: rgba(0,0,0,0.06);
+        }
+        html[data-theme="light"] .apple-prereq:hover {
+            background: rgba(29,78,216,0.04);
+            border-color: rgba(29,78,216,0.12);
+        }
+        html[data-theme="light"] .apple-prereq-icon {
+            background: rgba(29,78,216,0.08);
+            box-shadow: 0 0 0 1px rgba(29,78,216,0.08);
+        }
+        html[data-theme="light"] .apple-prereq:hover .apple-prereq-icon {
+            background: rgba(29,78,216,0.13);
+            box-shadow: 0 0 0 1px rgba(29,78,216,0.15), 0 3px 10px rgba(29,78,216,0.08);
+        }
+
+        /* ---- Light Theme: GitHub Banner ---- */
+        html[data-theme="light"] .apple-github {
+            background: linear-gradient(
+                135deg,
+                rgba(10,143,127,0.06) 0%,
+                #ffffff 50%,
+                rgba(10,143,127,0.04) 100%
+            );
+            border-color: rgba(10,143,127,0.16);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .apple-github::before {
+            background: linear-gradient(90deg, transparent, rgba(10,143,127,0.15), transparent);
+        }
+        html[data-theme="light"] .apple-github::after {
+            background: rgba(10,143,127,0.08);
+        }
+        html[data-theme="light"] .apple-github:hover {
+            border-color: rgba(10,143,127,0.28);
+        }
+        html[data-theme="light"] .apple-github-icon {
+            background: rgba(10,143,127,0.1);
+            color: var(--accent-teal);
+            box-shadow: 0 0 0 1px rgba(10,143,127,0.12);
+        }
+        html[data-theme="light"] .apple-github:hover .apple-github-icon {
+            background: rgba(10,143,127,0.15);
+            box-shadow: 0 0 0 1px rgba(10,143,127,0.2), 0 4px 16px rgba(10,143,127,0.1);
+        }
+
+        /* ---- Light Theme: Overview Card ---- */
+        html[data-theme="light"] .apple-overview {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.08);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .apple-overview::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.03), transparent);
+        }
+        html[data-theme="light"] .apple-overview:hover {
+            border-color: rgba(0,0,0,0.12);
+            box-shadow:
+                0 0 0 1px rgba(0,0,0,0.06),
+                0 4px 16px rgba(0,0,0,0.06),
+                0 24px 64px -4px rgba(0,0,0,0.1);
+        }
+        html[data-theme="light"] .overview-dot {
+            box-shadow: 0 0 10px rgba(0,119,182,0.35);
+        }
+
+        /* ---- Light Theme: Timeline Items ---- */
+        html[data-theme="light"] .timeline-item:hover {
+            background: rgba(0,0,0,0.025);
+            border-color: rgba(0,0,0,0.07);
+        }
+        html[data-theme="light"] .timeline-item.demo {
+            background: rgba(184,117,8,0.04);
+            border-color: rgba(184,117,8,0.08);
+        }
+        html[data-theme="light"] .timeline-item.demo:hover {
+            background: rgba(184,117,8,0.07);
+            border-color: rgba(184,117,8,0.14);
+        }
+
+        /* ---- Light Theme: Primary Button ---- */
+        html[data-theme="light"] .btn-primary {
+            background: linear-gradient(135deg, #0077b6, #0a8f7f);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,119,182,0.15);
+        }
+        html[data-theme="light"] .btn-primary:hover {
+            box-shadow: 0 10px 32px rgba(0,119,182,0.3);
+        }
+
+        /* ---- Light Theme: Live Button ---- */
+        html[data-theme="light"] .btn-live {
+            background: linear-gradient(135deg, #c0123b, #a21030);
+            box-shadow: 0 2px 8px rgba(192,18,59,0.15);
+        }
+        html[data-theme="light"] .btn-live:hover {
+            box-shadow: 0 10px 32px rgba(192,18,59,0.25);
+        }
+
+        /* ---- Light Theme: Banner Cards ---- */
+        html[data-theme="light"] .banner-card {
+            border-color: rgba(0,0,0,0.08);
+            box-shadow: var(--shadow-card);
+        }
+        html[data-theme="light"] .banner-card:hover {
+            border-color: rgba(0,0,0,0.12);
+        }
+
+        /* ---- Light Theme: Lang Toggle ---- */
+        html[data-theme="light"] .lang-toggle {
+            background: rgba(255,255,255,0.92);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+        }
+        html[data-theme="light"] .lang-toggle:hover {
+            border-color: rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 28px rgba(0,0,0,0.08);
+        }
+        html[data-theme="light"] .lang-toggle-pill {
+            background: linear-gradient(135deg, #0077b6, #0a8f7f);
+            box-shadow: 0 2px 10px rgba(0,119,182,0.3);
+        }
+        html[data-theme="light"] .lang-toggle-label.active {
+            color: #ffffff;
+        }
+        html[data-theme="light"] .lang-toggle-label.inactive {
+            color: var(--text-muted);
+        }
+
+        /* ---- Light Theme: Footer ---- */
+        html[data-theme="light"] footer {
+            background: #e5e5ea;
+            border-top-color: rgba(0,0,0,0.08);
+        }
+        html[data-theme="light"] .footer-social {
+            background: rgba(255,255,255,0.7);
+            border-color: rgba(0,0,0,0.08);
+            color: var(--text-muted);
+        }
+        html[data-theme="light"] .footer-social:hover {
+            border-color: rgba(0,119,182,0.2);
+            color: var(--accent-cyan);
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* ---- Light Theme: Scroll to Top ---- */
+        html[data-theme="light"] .scroll-top {
+            background: rgba(255,255,255,0.92);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07), 0 6px 20px rgba(0,0,0,0.05);
+        }
+        html[data-theme="light"] .scroll-top:hover {
+            border-color: rgba(0,119,182,0.25);
+            box-shadow: 0 4px 18px rgba(0,119,182,0.14);
+        }
+
+        /* ---- Light Theme: Hero gradient fade ---- */
+        html[data-theme="light"] .hero::after {
+            background: linear-gradient(to top, var(--bg-deep), transparent);
+        }
+
+        /* ---- Light Theme: Hero gradient text boost ---- */
+        html[data-theme="light"] .hero-sub {
+            background: linear-gradient(135deg, #005f8f, #07796b) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        /* ============================================
+           THEME TOGGLE BUTTON
+           ============================================ */
+        .theme-toggle-wrap {
+            position: fixed;
+            top: 24px;
+            z-index: 100;
+        }
+        html[dir="rtl"] .theme-toggle-wrap { left: 220px; }
+        html[dir="ltr"] .theme-toggle-wrap { right: 220px; }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* Dark mode default state */
+        html:not([data-theme="light"]) .theme-toggle {
+            background: rgba(8,9,14,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        html[data-theme="light"] .theme-toggle {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        html[data-theme="light"] .theme-toggle:hover {
+            border-color: rgba(0,119,182,0.3);
+            box-shadow: 0 2px 10px rgba(0,119,182,0.12), 0 6px 22px rgba(0,0,0,0.07);
+            color: var(--accent-cyan);
+        }
+
+        .theme-toggle .icon-sun,
+        .theme-toggle .icon-moon {
+            position: absolute;
+            transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Dark mode: show sun icon */
+        html:not([data-theme="light"]) .theme-toggle .icon-sun {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+        html:not([data-theme="light"]) .theme-toggle .icon-moon {
+            opacity: 0;
+            transform: scale(0.5) rotate(-90deg);
+        }
+
+        /* Light mode: show moon icon */
+        html[data-theme="light"] .theme-toggle .icon-sun {
+            opacity: 0;
+            transform: scale(0.5) rotate(90deg);
+        }
+        html[data-theme="light"] .theme-toggle .icon-moon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Theme toggle responsive */
+        @media (max-width: 768px) {
+            .theme-toggle-wrap { top: 16px; }
+            html[dir="rtl"] .theme-toggle-wrap { left: auto; right: 16px; }
+            html[dir="ltr"] .theme-toggle-wrap { right: auto; left: 16px; }
+            .theme-toggle { width: 38px; height: 38px; font-size: 0.85rem; }
+        }
+
+        /* ---- Reset & Base ---- */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            text-align: justify;
+        }
+        html[dir="rtl"] body { font-family: var(--font-arabic); }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        /* ---- Language Toggle ---- */
         .lang-en, .lang-ar { transition: opacity 0.35s ease, transform 0.35s ease; }
         html[dir="rtl"] .lang-en { display: none !important; }
         html[dir="ltr"] .lang-ar { display: none !important; }
 
-        /* ---- Hero ---- */
-        .hero-bg {
-            background: linear-gradient(135deg, #0a0e27 0%, #1a388e 40%, #6b0ae3 75%, #8b3dff 100%);
+        /* ---- Scrollbar ---- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
+        /* ---- Dot Grid Background ---- */
+        .dot-grid {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* ---- Ambient Orbs ---- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* ---- Hero Section ---- */
+        .hero {
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
-        .hero-bg::before {
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-deep), transparent);
+            z-index: 2;
+        }
+
+        /* Animated grain overlay */
+        .grain::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
         }
-        .hero-bg::after {
+
+        /* ---- Badge / Label ---- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            padding: 8px 18px;
+            background: rgba(34,211,238,0.06);
+            border: 1px solid rgba(34,211,238,0.15);
+            border-radius: 100px;
+        }
+        html[dir="rtl"] .badge {
+            font-family: var(--font-arabic);
+            letter-spacing: 0.05em;
+        }
+
+        /* ---- Section Label ---- */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+        }
+        html[dir="rtl"] .section-label {
+            font-family: var(--font-arabic);
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--accent-cyan);
+        }
+        html[dir="rtl"] .section-label::before { order: 1; }
+
+        /* ============================================
+           APPLE-STYLE CARD SYSTEM
+           ============================================ */
+
+        /* ---- Apple Frosted Panel ---- */
+        .apple-panel {
+            position: relative;
+            background: linear-gradient(
+                168deg,
+                rgba(255,255,255,0.05) 0%,
+                rgba(255,255,255,0.02) 50%,
+                rgba(255,255,255,0.01) 100%
+            );
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                        border-color 0.4s ease;
+        }
+        .apple-panel:hover {
+            transform: scale(1.015) translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: rgba(255,255,255,0.12);
+        }
+        /* Subtle inner highlight at top edge (Apple specular) */
+        .apple-panel::before {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 0; right: 0;
-            height: 80px;
-            background: linear-gradient(to top, #f7f8fc, transparent);
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            z-index: 2;
         }
-        .hero-glow {
+
+        /* ---- Apple Stat Card (Info Cards) ---- */
+        .apple-stat {
+            position: relative;
+            padding: 22px 20px 20px;
+            background: linear-gradient(
+                168deg,
+                rgba(255,255,255,0.055) 0%,
+                rgba(255,255,255,0.02) 100%
+            );
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        border-color 0.4s ease;
+        }
+        .apple-stat:hover {
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: rgba(255,255,255,0.13);
+        }
+        /* Top specular line */
+        .apple-stat::before {
+            content: '';
             position: absolute;
-            width: 600px; height: 600px;
+            top: 0;
+            left: 8%;
+            right: 8%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            z-index: 2;
+        }
+        /* Inner ambient glow */
+        .apple-stat::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.18;
+            filter: blur(50px);
+            opacity: 0.35;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+        .apple-stat:hover::after { opacity: 0.55; }
+        /* Position glow per direction */
+        html[dir="ltr"] .apple-stat::after { left: -20px; }
+        html[dir="rtl"] .apple-stat::after { right: -20px; }
+        /* Color-specific glows */
+        .apple-stat.cyan::after  { background: var(--accent-cyan); }
+        .apple-stat.rose::after  { background: var(--accent-rose); }
+        .apple-stat.gold::after  { background: var(--accent-gold); }
+        .apple-stat.violet::after { background: var(--accent-violet); }
+
+        /* Stat icon — large, centered, with glow ring */
+        .apple-stat-icon {
+            position: relative;
+            z-index: 1;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-bottom: 14px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .apple-stat:hover .apple-stat-icon {
+            transform: scale(1.08);
+        }
+        .apple-stat-icon.cyan {
+            background: rgba(34,211,238,0.12);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 0 1px rgba(34,211,238,0.1), 0 4px 16px rgba(34,211,238,0.08);
+        }
+        .apple-stat:hover .apple-stat-icon.cyan {
+            box-shadow: 0 0 0 1px rgba(34,211,238,0.2), 0 8px 28px rgba(34,211,238,0.15);
+        }
+        .apple-stat-icon.rose {
+            background: rgba(244,63,94,0.12);
+            color: var(--accent-rose);
+            box-shadow: 0 0 0 1px rgba(244,63,94,0.1), 0 4px 16px rgba(244,63,94,0.08);
+        }
+        .apple-stat:hover .apple-stat-icon.rose {
+            box-shadow: 0 0 0 1px rgba(244,63,94,0.2), 0 8px 28px rgba(244,63,94,0.15);
+        }
+        .apple-stat-icon.gold {
+            background: rgba(245,158,11,0.12);
+            color: var(--accent-gold);
+            box-shadow: 0 0 0 1px rgba(245,158,11,0.1), 0 4px 16px rgba(245,158,11,0.08);
+        }
+        .apple-stat:hover .apple-stat-icon.gold {
+            box-shadow: 0 0 0 1px rgba(245,158,11,0.2), 0 8px 28px rgba(245,158,11,0.15);
+        }
+        .apple-stat-icon.violet {
+            background: rgba(139,92,246,0.12);
+            color: var(--accent-violet);
+            box-shadow: 0 0 0 1px rgba(139,92,246,0.1), 0 4px 16px rgba(139,92,246,0.08);
+        }
+        .apple-stat:hover .apple-stat-icon.violet {
+            box-shadow: 0 0 0 1px rgba(139,92,246,0.2), 0 8px 28px rgba(139,92,246,0.15);
+        }
+
+        /* Stat card inner content */
+        .apple-stat-content { position: relative; z-index: 1; }
+        .apple-stat-title {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+        .apple-stat.cyan:hover .apple-stat-title { color: var(--accent-cyan); transform: scale(1.03); }
+        .apple-stat.rose:hover .apple-stat-title { color: var(--accent-rose); transform: scale(1.03); }
+        .apple-stat.gold:hover .apple-stat-title { color: var(--accent-gold); transform: scale(1.03); }
+        .apple-stat.violet:hover .apple-stat-title { color: var(--accent-violet); transform: scale(1.03); }
+
+        /* Apple pill button inside cards */
+        .apple-pill-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 9px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: -0.01em;
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            border: none;
+        }
+        .apple-pill-btn.cyan-fill {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+            color: var(--bg-deep);
+        }
+        .apple-pill-btn.cyan-fill:hover {
+            box-shadow: 0 6px 20px rgba(34,211,238,0.3);
+            transform: scale(1.03);
+        }
+        .apple-pill-btn.rose-fill {
+            background: linear-gradient(135deg, #ef4444, #e11d48);
+            color: white;
+        }
+        .apple-pill-btn.rose-fill:hover {
+            box-shadow: 0 6px 20px rgba(239,68,68,0.3);
+            transform: scale(1.03);
+        }
+        .apple-pill-btn.ghost {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .apple-pill-btn.ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.18);
+            transform: scale(1.03);
+        }
+
+        /* Contact tag pills */
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.64rem;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+        }
+        .contact-pill:hover { transform: scale(1.06); }
+        .contact-pill i { font-size: 0.58rem; }
+        .contact-pill.gold   { background: rgba(245,158,11,0.1); color: var(--accent-gold); }
+        .contact-pill.blue   { background: rgba(59,130,246,0.1);  color: var(--accent-blue); }
+        .contact-pill.violet { background: rgba(139,92,246,0.1);  color: var(--accent-violet); }
+        .contact-pill.gold:hover   { background: rgba(245,158,11,0.18); }
+        .contact-pill.blue:hover   { background: rgba(59,130,246,0.18); }
+        .contact-pill.violet:hover { background: rgba(139,92,246,0.18); }
+
+        /* ---- Apple Feature Card (Who Should Attend) ---- */
+        .apple-feature {
+            position: relative;
+            padding: 20px;
+            background: linear-gradient(
+                168deg,
+                rgba(255,255,255,0.04) 0%,
+                rgba(255,255,255,0.015) 100%
+            );
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .apple-feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 12%;
+            right: 12%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+        .apple-feature:hover {
+            transform: scale(1.015) translateY(-2px);
+            border-color: rgba(34,211,238,0.12);
+            box-shadow: var(--shadow-card-hover);
+        }
+        .apple-feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            background: rgba(34,211,238,0.08);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 0 1px rgba(34,211,238,0.08);
+            transition: all 0.4s ease;
+        }
+        .apple-feature:hover .apple-feature-icon {
+            background: rgba(34,211,238,0.13);
+            box-shadow: 0 0 0 1px rgba(34,211,238,0.15), 0 4px 16px rgba(34,211,238,0.1);
+            transform: scale(1.06);
+        }
+        .apple-feature p {
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+        .apple-feature:hover p {
+            color: var(--accent-cyan) !important;
+            transform: scale(1.02);
+        }
+
+        /* ---- Apple Prereq Item ---- */
+        .apple-prereq {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .apple-prereq:hover {
+            background: rgba(255,255,255,0.045);
+            border-color: rgba(255,255,255,0.08);
+            transform: translateX(4px);
+        }
+        html[dir="rtl"] .apple-prereq:hover {
+            transform: translateX(-4px);
+        }
+        .apple-prereq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            background: rgba(59,130,246,0.08);
+            color: var(--accent-blue);
+            box-shadow: 0 0 0 1px rgba(59,130,246,0.06);
+            transition: all 0.35s ease;
+        }
+        .apple-prereq:hover .apple-prereq-icon {
+            background: rgba(59,130,246,0.14);
+            box-shadow: 0 0 0 1px rgba(59,130,246,0.12), 0 4px 12px rgba(59,130,246,0.08);
+        }
+        .apple-prereq span {
+            transition: color 0.35s ease, transform 0.35s ease;
+        }
+        .apple-prereq:hover > span {
+            color: var(--accent-blue) !important;
+            transform: scale(1.02);
+        }
+
+        /* ---- Apple GitHub Banner ---- */
+        .apple-github {
+            position: relative;
+            padding: 24px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(
+                135deg,
+                rgba(20,184,166,0.08) 0%,
+                rgba(34,211,238,0.04) 50%,
+                rgba(20,184,166,0.06) 100%
+            );
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(20,184,166,0.12);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .apple-github::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 8%;
+            right: 8%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(20,184,166,0.2), transparent);
+        }
+        .apple-github::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(20,184,166,0.12);
+            filter: blur(60px);
             pointer-events: none;
         }
-
-        /* ---- Cards ---- */
-        .card-lift {
-            transition: transform 0.4s cubic-bezier(.22,.68,0,1.1), box-shadow 0.4s ease;
+        html[dir="ltr"] .apple-github::after { right: -40px; }
+        html[dir="rtl"] .apple-github::after { left: -40px; }
+        .apple-github:hover {
+            transform: scale(1.01) translateY(-2px);
+            border-color: rgba(20,184,166,0.22);
+            box-shadow: var(--shadow-card-hover);
         }
-        .card-lift:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.12);
+        .apple-github-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-teal);
+            background: rgba(20,184,166,0.1);
+            box-shadow: 0 0 0 1px rgba(20,184,166,0.08);
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+        .apple-github:hover .apple-github-icon {
+            box-shadow: 0 0 0 1px rgba(20,184,166,0.18), 0 6px 20px rgba(20,184,166,0.12);
+            transform: scale(1.06);
+        }
+        .apple-github h4, .apple-github p {
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+        .apple-github:hover h4 {
+            color: var(--accent-teal);
+            transform: scale(1.03);
         }
 
-        /* ---- Accent bar ---- */
-        .accent-bar { position: relative; }
-        .accent-bar::before {
+        /* ---- Apple Overview Card ---- */
+        .apple-overview {
+            position: relative;
+            padding: 36px;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(
+                168deg,
+                rgba(255,255,255,0.05) 0%,
+                rgba(255,255,255,0.015) 100%
+            );
+            backdrop-filter: blur(48px) saturate(1.5);
+            -webkit-backdrop-filter: blur(48px) saturate(1.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: var(--shadow-float);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .apple-overview::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
-            border-radius: 4px;
+            top: 0;
+            left: 6%;
+            right: 6%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            z-index: 3;
         }
-        html[dir="rtl"] .accent-bar::before { left: auto; right: 0; }
-        .accent-blue::before { background: linear-gradient(to bottom, #3380ff, #1a5ff5); }
-        .accent-red::before { background: linear-gradient(to bottom, #ef4444, #dc2626); }
-        .accent-emerald::before { background: linear-gradient(to bottom, #10b981, #059669); }
-        .accent-purple::before { background: linear-gradient(to bottom, #8b3dff, #6b0ae3); }
+        .apple-overview:hover {
+            border-color: rgba(255,255,255,0.12);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.06),
+                0 4px 12px rgba(0,0,0,0.15),
+                0 24px 64px -8px rgba(0,0,0,0.35);
+        }
+        /* Overview bullet dot */
+        .overview-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            flex-shrink: 0;
+            margin-top: 10px;
+            box-shadow: 0 0 8px rgba(34,211,238,0.3);
+        }
 
-        /* ---- Buttons ---- */
-        .btn-primary {
-            background: linear-gradient(135deg, #3380ff, #8b3dff);
-            transition: all 0.3s ease;
+        /* ---- Timeline / Agenda ---- */
+        .timeline-item {
             position: relative;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .timeline-item:hover {
+            background: rgba(255,255,255,0.025);
+            border-color: rgba(255,255,255,0.06);
+            transform: scale(1.01);
+        }
+        .timeline-item p {
+            transition: color 0.35s ease, transform 0.35s ease;
+        }
+        .timeline-item:hover p[style*="font-weight:600"] {
+            color: var(--accent-cyan) !important;
+            transform: scale(1.02);
+        }
+        .timeline-item.demo {
+            background: rgba(245,158,11,0.03);
+            border: 1px solid rgba(245,158,11,0.06);
+        }
+        .timeline-item.demo:hover {
+            background: rgba(245,158,11,0.06);
+            border-color: rgba(245,158,11,0.12);
+            transform: scale(1.01);
+        }
+        .timeline-item.demo:hover p[style*="font-weight:600"] {
+            color: var(--accent-gold) !important;
+            transform: scale(1.02);
+        }
+        .timeline-time {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-cyan);
+            letter-spacing: 0.05em;
+        }
+        html[dir="rtl"] .timeline-time {
+            font-family: var(--font-arabic);
+        }
+
+        /* ---- Primary Button ---- */
+        .btn-primary {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--bg-deep);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
             overflow: hidden;
+            transition: all 0.35s ease;
         }
         .btn-primary::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #8b3dff, #3380ff);
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-cyan));
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s ease;
         }
         .btn-primary:hover::before { opacity: 1; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+        .btn-primary:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 32px rgba(34,211,238,0.3);
+        }
         .btn-primary span, .btn-primary i { position: relative; z-index: 1; }
 
+        /* ---- Live Button ---- */
         .btn-live {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            background: linear-gradient(135deg, #ef4444, #e11d48);
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.35s ease;
         }
-        .btn-live:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(239,68,68,0.35); }
+        .btn-live:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 32px rgba(239,68,68,0.3);
+        }
 
-        /* ---- Toggle ---- */
-        .lang-toggle {
-            background: #0a0e27;
-            border: 1px solid rgba(255,255,255,0.12);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05);
+        /* ---- Live Pulse Dot ---- */
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-rose);
+            border-radius: 50%;
+            position: relative;
         }
-        .lang-toggle:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1); }
+        .live-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-rose);
+            animation: livePulse 2s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.6; transform: scale(1.4); }
+        }
+
+        /* ---- Language Toggle ---- */
+        .lang-toggle-wrap {
+            position: fixed;
+            top: 24px;
+            z-index: 100;
+        }
+        html[dir="rtl"] .lang-toggle-wrap { left: 24px; }
+        html[dir="ltr"] .lang-toggle-wrap { right: 24px; }
+
+        .lang-toggle {
+            background: rgba(8,9,14,0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-toggle:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .lang-toggle-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 170px;
+            height: 40px;
+        }
         .lang-toggle-pill {
-            transition: left 0.4s cubic-bezier(.22,.68,0,1.1);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            background: linear-gradient(135deg, #3380ff, #8b3dff);
+            position: absolute;
+            width: calc(50% - 2px);
+            height: 34px;
+            top: 3px;
+            border-radius: 100px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+            transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 2px 12px rgba(34,211,238,0.25);
         }
         .lang-toggle-label {
-            transition: color 0.3s ease, font-weight 0.3s ease;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
             user-select: none;
         }
-        .lang-toggle-label.active { color: #ffffff; font-weight: 800; }
-        .lang-toggle-label.inactive { color: rgba(255,255,255,0.45); font-weight: 500; }
-        .lang-toggle-icon { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .lang-toggle-label.active { color: var(--bg-deep); }
+        .lang-toggle-label.inactive { color: var(--text-muted); }
 
-        /* ---- Table ---- */
-        .agenda-row { transition: background 0.2s ease; }
-        .agenda-row:hover { background: rgba(51,128,255,0.06); }
+        /* ---- Info Strip Items ---- */
+        .info-strip {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .info-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .info-chip i { color: var(--accent-cyan); font-size: 0.8rem; }
 
-        /* ---- Banner ---- */
-        .banner-img {
+        /* ---- Banner Section ---- */
+        .banner-card {
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: var(--shadow-card);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .banner-card:hover {
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: var(--shadow-card-hover);
+            transform: scale(1.015);
+        }
+        .banner-card img {
             height: 280px;
             width: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(.22,.68,0,1.1);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .banner-wrap:hover .banner-img { transform: scale(1.04); }
+        .banner-card:hover img { transform: scale(1.06); }
+
+        /* ---- Footer ---- */
+        footer {
+            position: relative;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+        }
+        .footer-social {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            color: var(--text-muted);
+        }
+        .footer-social:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.06);
+            transform: scale(1.1);
+        }
+
+        /* ---- Scroll-to-top ---- */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            z-index: 90;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: rgba(18,20,31,0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            color: var(--accent-cyan);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        html[dir="rtl"] .scroll-top { left: 24px; }
+        html[dir="ltr"] .scroll-top { right: 24px; }
+        .scroll-top:hover {
+            border-color: rgba(34,211,238,0.25);
+            box-shadow: 0 8px 24px rgba(34,211,238,0.12);
+            transform: scale(1.1);
+        }
 
         /* ---- Animations ---- */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
             from { opacity: 0; }
-            to { opacity: 1; }
+            to   { opacity: 1; }
         }
-        .anim-fade-up { animation: fadeUp 0.7s ease both; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-12px) rotate(1deg); }
+            66% { transform: translateY(6px) rotate(-0.5deg); }
+        }
+        .anim-fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
         .anim-delay-1 { animation-delay: 0.1s; }
         .anim-delay-2 { animation-delay: 0.2s; }
         .anim-delay-3 { animation-delay: 0.3s; }
         .anim-delay-4 { animation-delay: 0.4s; }
         .anim-delay-5 { animation-delay: 0.5s; }
+        .anim-delay-6 { animation-delay: 0.6s; }
 
-        /* ---- Noise texture ---- */
-        .noise::before {
+        /* ---- Scroll Reveal ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+                        transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered children */
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
+
+        /* ---- Divider ---- */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+        }
+
+        /* ---- Container ---- */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---- Grid Helpers ---- */
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; }
+        .grid-3 { display: grid; grid-template-columns: 1fr; gap: 14px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr; gap: 14px; }
+        @media (min-width: 640px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+            .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* ---- Organizer Profile Card ---- */
+        .organizer-profile {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            padding: 32px;
+            background: linear-gradient(168deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        border-color 0.4s ease;
+        }
+        .organizer-profile:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: rgba(184,117,8,0.25);
+        }
+        .organizer-profile::before {
             content: '';
             position: absolute;
-            inset: 0;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            top: 0; left: 8%; right: 8%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            z-index: 2;
+        }
+        .organizer-profile::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            filter: blur(60px);
+            opacity: 0.2;
             pointer-events: none;
+            z-index: 0;
+        }
+        html[dir="ltr"] .organizer-profile::after { right: -30px; }
+        html[dir="rtl"] .organizer-profile::after { left: -30px; }
+
+        .organizer-photo {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 auto;
+            width: 150px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.08);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+        }
+        .organizer-profile:hover .organizer-photo {
+            transform: scale(1.03);
+            box-shadow: 0 8px 36px rgba(0,0,0,0.35), 0 0 0 1px rgba(184,117,8,0.2);
+        }
+        .organizer-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        /* ---- Section divider ---- */
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.7rem;
+        .organizer-info {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            min-width: 0;
+        }
+        .organizer-info .organizer-label {
+            display: inline-block;
+            font-size: 0.65rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #8b3dff;
-            padding: 6px 14px;
-            background: rgba(139,61,255,0.08);
-            border-radius: 50px;
-            border: 1px solid rgba(139,61,255,0.15);
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+        }
+        .organizer-info .organizer-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .organizer-info .organizer-title {
+            font-size: 0.78rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+            margin-bottom: 14px;
+            opacity: 0.85;
+        }
+        .organizer-info .organizer-bio {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .organizer-info .organizer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        /* ---- Scrollbar ---- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f7f8fc; }
-        ::-webkit-scrollbar-thumb { background: #c4a8ff; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b3dff; }
+        @media (max-width: 639px) {
+            .organizer-profile {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+                padding: 28px 22px;
+            }
+            .organizer-photo {
+                width: 130px;
+                border-radius: 18px;
+            }
+            .organizer-info .organizer-links {
+                justify-content: center;
+            }
+        }
+
+        /* Light theme overrides for organizer profile */
+        html[data-theme="light"] .organizer-profile {
+            background: #ffffff;
+            border-color: rgba(0,0,0,0.08);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        html[data-theme="light"] .organizer-profile:hover {
+            border-color: rgba(184,117,8,0.2);
+            background: linear-gradient(168deg, #ffffff 0%, rgba(184,117,8,0.03) 100%);
+        }
+        html[data-theme="light"] .organizer-profile::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.025), transparent);
+        }
+        html[data-theme="light"] .organizer-profile::after {
+            opacity: 0.1;
+        }
+        html[data-theme="light"] .organizer-photo {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06);
+        }
+        html[data-theme="light"] .organizer-profile:hover .organizer-photo {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 0 0 1px rgba(184,117,8,0.15);
+        }
+
+        /* ---- Audience List Items (card-free) ---- */
+        .audience-item {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .audience-item:last-child {
+            border-bottom: none;
+        }
+        .audience-item:hover {
+            padding-left: 10px;
+        }
+        html[dir="rtl"] .audience-item:hover {
+            padding-left: 0;
+            padding-right: 10px;
+        }
+        .audience-item .apple-feature-icon {
+            transition: all 0.4s ease;
+        }
+        .audience-item:hover .apple-feature-icon {
+            background: rgba(34,211,238,0.13);
+            box-shadow: 0 0 0 1px rgba(34,211,238,0.15), 0 4px 16px rgba(34,211,238,0.1);
+            transform: scale(1.08);
+        }
+        .audience-item p {
+            transition: color 0.4s ease;
+        }
+        .audience-item:hover p {
+            color: var(--accent-cyan) !important;
+        }
+        html[data-theme="light"] .audience-item {
+            border-bottom-color: rgba(0,0,0,0.08);
+        }
+        html[data-theme="light"] .audience-item:hover .apple-feature-icon {
+            background: rgba(0,119,182,0.13);
+            box-shadow: 0 0 0 1px rgba(0,119,182,0.18), 0 4px 14px rgba(0,119,182,0.1);
+        }
+        html[data-theme="light"] .audience-item:hover p {
+            color: var(--accent-cyan) !important;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 120px 0 80px; }
+            .hero-title { font-size: 2.2rem !important; }
+            .hero-sub { font-size: 1.6rem !important; }
+            .btn-primary, .btn-live { padding: 14px 24px; font-size: 0.85rem; }
+            .cta-row { flex-direction: column; width: 100%; }
+            .cta-row a { width: 100%; justify-content: center; }
+            .info-strip { flex-direction: column; }
+            .apple-stat { padding: 18px 16px 16px; }
+            .apple-overview { padding: 24px 18px; }
+            .banner-card img { height: 200px; }
+            .lang-toggle-wrap { top: 16px; }
+            html[dir="rtl"] .lang-toggle-wrap { left: 16px; }
+            html[dir="ltr"] .lang-toggle-wrap { right: 16px; }
+        }
     </style>
 </head>
-<body class="text-slate-800">
+<body>
 
     <!-- ===================== LANGUAGE TOGGLE (fixed) ===================== -->
-    <div class="fixed top-5 z-50 anim-fade-up" style="right:1.5rem;">
-        <button onclick="toggleLang()" class="lang-toggle rounded-2xl px-1.5 py-1.5 flex items-center cursor-pointer" id="langBtn" aria-label="Toggle Language" dir="ltr">
-            <div class="relative flex items-center rounded-xl" dir="ltr" style="width:180px;height:42px;">
-                <div class="lang-toggle-pill absolute rounded-xl" id="langPill" style="width:calc(50% - 3px);height:36px;top:3px;left:calc(50%);"></div>
-                <div class="relative z-10 flex-1 flex items-center justify-center gap-1.5 lang-toggle-label inactive" id="langEN">
-                    <i class="fas fa-globe text-xs lang-toggle-icon"></i>
-                    <span class="text-sm">English</span>
+    <div class="lang-toggle-wrap anim-fade-up">
+        <button onclick="toggleLang()" class="lang-toggle" id="langBtn" aria-label="Toggle Language" dir="ltr">
+            <div class="lang-toggle-inner" dir="ltr">
+                <div class="lang-toggle-pill" id="langPill" style="left:calc(50%)"></div>
+                <div class="lang-toggle-label inactive" id="langEN">
+                    <i class="fas fa-globe" style="font-size:0.7rem"></i>
+                    <span>English</span>
                 </div>
-                <div class="relative z-10 flex-1 flex items-center justify-center gap-1.5 lang-toggle-label active font-arabic" id="langAR">
-                    <span class="text-sm">العربية</span>
-                    <i class="fas fa-mosque text-xs lang-toggle-icon"></i>
+                <div class="lang-toggle-label active" id="langAR" style="font-family:var(--font-arabic)">
+                    <span>العربية</span>
                 </div>
             </div>
         </button>
     </div>
 
-    <!-- ===================== HERO ===================== -->
-    <section class="hero-bg relative pt-20 pb-28 px-4">
-        <div class="hero-glow bg-ocean-400" style="top:-200px;left:-100px;"></div>
-        <div class="hero-glow bg-royal-500" style="top:100px;right:-200px;"></div>
+    <!-- ===================== THEME TOGGLE (fixed) ===================== -->
+    <div class="theme-toggle-wrap anim-fade-up anim-delay-1">
+        <button onclick="toggleTheme()" class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">
+            <i class="fas fa-sun icon-sun"></i>
+            <i class="fas fa-moon icon-moon"></i>
+        </button>
+    </div>
 
-        <div class="container mx-auto max-w-5xl relative z-10 text-center">
-            <!-- Series label -->
-            <div class="anim-fade-up mb-6">
-                <span class="lang-en inline-block px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/20 text-white/80 bg-white/5 backdrop-blur-sm">
-                    AI Tools Workshop Series
-                </span>
-                <span class="lang-ar inline-block px-5 py-2 rounded-full text-sm font-bold tracking-wide border border-white/20 text-white/80 bg-white/5 backdrop-blur-sm font-arabic">
-                    سلسلة ورشة عمل أدوات الذكاء الاصطناعي
-                </span>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero grain dot-grid">
+        <!-- Ambient Orbs -->
+        <div class="orb" style="width:500px;height:500px;background:var(--glow-cyan);top:-150px;left:-100px;animation:float 12s ease-in-out infinite;"></div>
+        <div class="orb" style="width:600px;height:600px;background:var(--glow-violet);bottom:-200px;right:-150px;animation:float 15s ease-in-out infinite reverse;"></div>
+        <div class="orb" style="width:300px;height:300px;background:var(--glow-teal);top:40%;left:60%;animation:float 10s ease-in-out infinite 3s;"></div>
+
+        <div class="container" style="position:relative;z-index:10;text-align:center;padding:80px 24px;">
+
+            <!-- Series Badge -->
+            <div class="anim-fade-up" style="margin-bottom:24px;">
+                <span class="badge lang-en">AI Tools Workshop Series <span style="color:var(--accent-gold);margin-left:6px;">· Arabic Version</span></span>
+                <span class="badge lang-ar" style="font-family:var(--font-arabic);">سلسلة ورشة عمل أدوات الذكاء الاصطناعي <span style="color:var(--accent-gold);margin-right:6px;">· النسخة العربية</span></span>
             </div>
 
             <!-- Title -->
-            <h1 class="anim-fade-up anim-delay-1">
-                <span class="lang-en block font-display text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
-                    Introduction to<br>
-                    <span class="bg-gradient-to-r from-ocean-300 via-royal-300 to-ocean-300 bg-clip-text text-transparent">Machine Learning & Deep Learning</span><br>
-                    <span class="text-3xl md:text-4xl lg:text-5xl text-white/90">with Real-Time Demos</span>
+            <h1 class="anim-fade-up anim-delay-1" style="margin-bottom:12px;">
+                <span class="lang-en" style="display:block;">
+                    <span class="hero-title" style="font-family:var(--font-display);font-size:3.6rem;font-weight:400;line-height:1.15;color:var(--text-primary);display:block;">
+                        Introduction to
+                    </span>
+                    <span class="hero-sub" style="font-family:var(--font-display);font-size:3rem;font-weight:400;font-style:italic;line-height:1.2;display:block;margin-top:4px;background:linear-gradient(135deg,var(--accent-cyan),var(--accent-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                        Machine Learning &amp; Deep Learning
+                    </span>
                 </span>
-                <span class="lang-ar block font-arabic text-4xl md:text-5xl lg:text-6xl font-black text-white leading-relaxed">
-                    مقدمة في تعلم الآلة والتعلم العميق
-                    <br>
-                    <span class="bg-gradient-to-r from-ocean-300 via-royal-300 to-ocean-300 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl">مع عروض توضيحية حية</span>
+                <span class="lang-ar" style="display:block;font-family:var(--font-arabic);">
+                    <span class="hero-title" style="font-size:3.2rem;font-weight:800;line-height:1.4;color:var(--text-primary);display:block;">
+                        مقدمة في التعلم الآلي والتعلم العميق
+                    </span>
                 </span>
             </h1>
 
-            <!-- Subtitle: date + venue -->
-            <div class="anim-fade-up anim-delay-2 mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-                <div class="flex items-center gap-2 text-white/85">
-                    <i class="far fa-calendar-alt text-ocean-300"></i>
-                    <span class="lang-en font-body text-lg">Wednesday, March 31, 2026</span>
-                    <span class="lang-ar font-arabic text-lg">الأربعاء 31 مارس 2026</span>
+            <!-- Subtitle -->
+            <p class="anim-fade-up anim-delay-2" style="margin-bottom:40px;">
+                <span class="lang-en" style="font-size:1.25rem;color:var(--text-secondary);font-weight:300;">with Real-Time Demonstrations</span>
+                <span class="lang-ar" style="font-size:1.3rem;color:var(--text-secondary);font-weight:400;font-family:var(--font-arabic);">مع عروض توضيحية حية</span>
+            </p>
+
+
+            <!-- Info Chips -->
+            <div class="anim-fade-up anim-delay-3 info-strip" style="margin-bottom:44px;">
+                <div class="info-chip">
+                    <i class="far fa-calendar-alt"></i>
+                    <span class="lang-en" style="font-family:var(--font-body)">Wednesday, March 31, 2026</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">الأربعاء 31 مارس 2026</span>
                 </div>
-                <div class="hidden sm:block w-px h-5 bg-white/25"></div>
-                <div class="flex items-center gap-2 text-white/85">
-                    <i class="far fa-clock text-ocean-300"></i>
-                    <span class="lang-en font-body text-lg">2:00 PM – 4:00 PM</span>
-                    <span class="lang-ar font-arabic text-lg">2 بعد الظهر – 4 مساءً</span>
+                <div class="info-chip">
+                    <i class="far fa-clock"></i>
+                    <span class="lang-en" style="font-family:var(--font-body)">2:00 PM – 4:00 PM</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">2 بعد الظهر – 4 مساءً</span>
                 </div>
-                <div class="hidden sm:block w-px h-5 bg-white/25"></div>
-                <div class="flex items-center gap-2 text-white/85">
-                    <i class="fab fa-youtube text-red-400"></i>
-                    <span class="lang-en font-body text-lg">YouTube Live</span>
-                    <span class="lang-ar font-arabic text-lg">بث مباشر على يوتيوب</span>
+                <div class="info-chip">
+                    <div class="live-dot"></div>
+                    <span class="lang-en" style="font-family:var(--font-body)">YouTube Live</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">بث مباشر على يوتيوب</span>
                 </div>
             </div>
 
-            <!-- CTA buttons -->
-            <div class="anim-fade-up anim-delay-3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://kaustforms.formstack.com/forms/placeholder_link"
-                   class="btn-primary inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-xl text-lg shadow-lg">
-                    <span class="lang-en"><i class="fas fa-user-plus mr-1"></i> Register Now</span>
-                    <span class="lang-ar font-arabic"><i class="fas fa-user-plus ml-1"></i> سجّل الآن</span>
+            <!-- CTA Buttons -->
+            <div class="anim-fade-up anim-delay-4 cta-row" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+                <a href="https://kaustforms.formstack.com/forms/placeholder_link" class="btn-primary">
+                    <span class="lang-en"><i class="fas fa-user-plus"></i> <span>Register Now</span></span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)"><span>سجّل الآن</span> <i class="fas fa-user-plus"></i></span>
                 </a>
-                <a href="https://www.youtube.com/watch?v=placeholder"
-                   class="btn-live inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-xl text-lg shadow-lg">
-                    <span class="lang-en"><i class="fas fa-play-circle mr-1"></i> Join Livestream</span>
-                    <span class="lang-ar font-arabic"><i class="fas fa-play-circle ml-1"></i> انضم للبث المباشر</span>
+                <a href="https://www.youtube.com/watch?v=placeholder" class="btn-live">
+                    <span class="lang-en"><i class="fas fa-play-circle"></i> <span>Join Livestream</span></span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)"><span>انضم للبث المباشر</span> <i class="fas fa-play-circle"></i></span>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- ===================== BANNER IMAGES ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 -mt-14 relative z-20">
-        <div class="flex flex-col md:flex-row justify-center gap-5">
-            <div class="banner-wrap overflow-hidden rounded-2xl shadow-2xl w-full md:w-1/2 ring-1 ring-white/50">
-                <img src="kvl.png" alt="Workshop Series Banner" class="banner-img" />
+    <div class="container reveal" style="margin-top:-60px;position:relative;z-index:20;margin-bottom:48px;">
+        <div class="grid-2" style="gap:20px;">
+            <div class="banner-card">
+                <img src="kvl.jpg" alt="Workshop Series Banner" />
             </div>
-            <div class="banner-wrap overflow-hidden rounded-2xl shadow-2xl w-full md:w-1/2 ring-1 ring-white/50">
-                <img src="AI_arabic_thumbnail.png" alt="AI Workshop Banner" class="banner-img" />
+            <div class="banner-card">
+                <img src="AI_arabic_thumbnail.jpg" alt="AI Workshop Banner" />
             </div>
         </div>
     </div>
 
     <!-- ===================== INFO CARDS ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 py-14">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="container" style="margin-bottom:48px;">
+        <div class="grid-3 reveal-stagger reveal">
 
             <!-- Date Card -->
-            <div class="card-lift accent-bar accent-blue bg-white p-6 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-ocean-50 flex items-center justify-center">
-                        <i class="far fa-calendar-check text-xl text-ocean-600"></i>
+            <div class="apple-stat cyan">
+                <div class="apple-stat-content">
+                    <div class="apple-stat-icon cyan">
+                        <i class="far fa-calendar-check"></i>
                     </div>
-                    <h3 class="font-bold text-lg text-ocean-900">
+                    <h3 class="apple-stat-title">
                         <span class="lang-en">Date & Time</span>
-                        <span class="lang-ar font-arabic">التاريخ والوقت</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">التاريخ والوقت</span>
                     </h3>
+                    <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+                        <li style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-secondary);">
+                            <i class="far fa-calendar-alt" style="color:var(--accent-cyan);font-size:0.7rem;width:16px;text-align:center;opacity:0.7;"></i>
+                            <span class="lang-en">Wednesday, March 31, 2026</span>
+                            <span class="lang-ar" style="font-family:var(--font-arabic)">الأربعاء 31 مارس 2026</span>
+                        </li>
+                        <li style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-secondary);">
+                            <i class="far fa-clock" style="color:var(--accent-cyan);font-size:0.7rem;width:16px;text-align:center;opacity:0.7;"></i>
+                            <span class="lang-en">2:00 PM – 4:00 PM</span>
+                            <span class="lang-ar" style="font-family:var(--font-arabic)">2 بعد الظهر – 4 مساءً</span>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="space-y-2 text-slate-600 text-sm">
-                    <li class="flex items-center gap-2">
-                        <i class="far fa-calendar-alt text-ocean-400 text-xs"></i>
-                        <span class="lang-en">Wednesday, March 31, 2026</span>
-                        <span class="lang-ar font-arabic">الأربعاء 31 مارس 2026</span>
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <i class="far fa-clock text-ocean-400 text-xs"></i>
-                        <span class="lang-en">2:00 PM – 4:00 PM</span>
-                        <span class="lang-ar font-arabic">2 بعد الظهر – 4 مساءً</span>
-                    </li>
-                </ul>
             </div>
 
             <!-- Venue Card -->
-            <div class="card-lift accent-bar accent-red bg-white p-6 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
-                        <i class="fab fa-youtube text-xl text-red-500"></i>
+            <div class="apple-stat rose">
+                <div class="apple-stat-content">
+                    <div class="apple-stat-icon rose">
+                        <i class="fab fa-youtube"></i>
                     </div>
-                    <h3 class="font-bold text-lg text-red-900">
+                    <h3 class="apple-stat-title">
                         <span class="lang-en">Venue</span>
-                        <span class="lang-ar font-arabic">المكان</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">المكان</span>
                     </h3>
-                </div>
-                <p class="text-slate-600 text-sm mb-4">
-                    <span class="lang-en">YouTube LIVE Session</span>
-                    <span class="lang-ar font-arabic">جلسة بث مباشر على يوتيوب</span>
-                </p>
-                <a href="https://www.youtube.com/watch?v=placeholder"
-                   class="btn-live flex items-center justify-center text-white py-2.5 px-4 rounded-xl font-bold text-sm w-full">
-                    <span class="lang-en"><i class="fas fa-play-circle mr-2"></i>Join Livestream</span>
-                    <span class="lang-ar font-arabic"><i class="fas fa-play-circle ml-2"></i>انضم للبث</span>
-                </a>
-            </div>
-
-            <!-- Organizer Card -->
-            <div class="card-lift accent-bar accent-emerald bg-white p-6 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center">
-                        <i class="fas fa-user-tie text-xl text-emerald-600"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-emerald-900">
-                        <span class="lang-en">Organizer</span>
-                        <span class="lang-ar font-arabic">المنظّم</span>
-                    </h3>
-                </div>
-                <p class="font-bold text-slate-800 text-sm">
-                    <span class="lang-en">Dr. Abdelghafour HALIMI</span>
-                    <span class="lang-ar font-arabic">د. عبد الغفور حليمي</span>
-                </p>
-                <p class="text-slate-500 text-xs mb-3">
-                    <span class="lang-en">Visualization Core Laboratory</span>
-                    <span class="lang-ar font-arabic">مختبر التصوير المرئي الأساسي</span>
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <a href="mailto:abdelghafour.halimi@kaust.edu.sa" class="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-900 transition-colors bg-emerald-50 px-2.5 py-1 rounded-lg">
-                        <i class="fas fa-envelope text-[10px]"></i>
-                        <span class="lang-en">Email</span>
-                        <span class="lang-ar font-arabic">بريد</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900 transition-colors bg-blue-50 px-2.5 py-1 rounded-lg">
-                        <i class="fab fa-linkedin text-[10px]"></i>
-                        <span class="lang-en">LinkedIn</span>
-                        <span class="lang-ar font-arabic">لينكدإن</span>
-                    </a>
-                    <a href="https://www.ahalimi.com" class="inline-flex items-center gap-1 text-xs font-medium text-purple-700 hover:text-purple-900 transition-colors bg-purple-50 px-2.5 py-1 rounded-lg">
-                        <i class="fas fa-globe text-[10px]"></i>
-                        <span class="lang-en">Website</span>
-                        <span class="lang-ar font-arabic">الموقع</span>
+                    <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:14px;">
+                        <span class="lang-en">YouTube LIVE Session</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">جلسة بث مباشر على يوتيوب</span>
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=placeholder" class="apple-pill-btn rose-fill">
+                        <span class="lang-en"><i class="fas fa-play-circle" style="margin-right:4px;"></i> Join Livestream</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">انضم للبث <i class="fas fa-play-circle" style="margin-right:4px;"></i></span>
                     </a>
                 </div>
             </div>
 
             <!-- Register Card -->
-            <div class="card-lift accent-bar accent-purple bg-white p-6 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-royal-50 flex items-center justify-center">
-                        <i class="fas fa-user-plus text-xl text-royal-600"></i>
+            <div class="apple-stat violet">
+                <div class="apple-stat-content">
+                    <div class="apple-stat-icon violet">
+                        <i class="fas fa-user-plus"></i>
                     </div>
-                    <h3 class="font-bold text-lg text-royal-900">
+                    <h3 class="apple-stat-title">
                         <span class="lang-en">Register</span>
-                        <span class="lang-ar font-arabic">التسجيل</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">التسجيل</span>
                     </h3>
+                    <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:14px;">
+                        <span class="lang-en">Secure your spot for this workshop</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">احجز مقعدك في ورشة العمل</span>
+                    </p>
+                    <a href="https://kaustforms.formstack.com/forms/placeholder_link" class="apple-pill-btn cyan-fill">
+                        <span class="lang-en"><i class="fas fa-sign-in-alt" style="margin-right:4px;"></i> Register Now</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">سجّل الآن <i class="fas fa-sign-in-alt" style="margin-right:4px;"></i></span>
+                    </a>
                 </div>
-                <p class="text-slate-600 text-sm mb-4">
-                    <span class="lang-en">Secure your spot for this workshop</span>
-                    <span class="lang-ar font-arabic">احجز مقعدك في ورشة العمل</span>
+            </div>
+
+        </div>
+
+        <!-- Organizer Profile Card -->
+        <div class="organizer-profile reveal" style="margin-top:18px;">
+            <div class="organizer-photo">
+                <img src="abdelghafour halimi 2.png" alt="Dr. Abdelghafour Halimi" />
+            </div>
+            <div class="organizer-info">
+                <span class="organizer-label">
+                    <span class="lang-en">Organizer & Speaker</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">المنظّم والمتحدث</span>
+                </span>
+                <h3 class="organizer-name">
+                    <span class="lang-en" style="font-family:var(--font-display);font-weight:400;">Dr. Abdelghafour Halimi</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">د. عبد الغفور حليمي</span>
+                </h3>
+                <p class="organizer-title">
+                    <span class="lang-en">Sr. AI & Data Scientist — KAUST Visualization Core Lab</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">كبير علماء البيانات والذكاء الاصطناعي — مختبر التصوير المرئي الأساسي، كاوست</span>
                 </p>
-                <a href="https://kaustforms.formstack.com/forms/placeholder_link"
-                   class="btn-primary flex items-center justify-center text-white py-2.5 px-4 rounded-xl font-bold text-sm w-full">
-                    <span class="lang-en"><i class="fas fa-sign-in-alt mr-2"></i>Register Now</span>
-                    <span class="lang-ar font-arabic"><i class="fas fa-sign-in-alt ml-2"></i>سجّل الآن</span>
-                </a>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ===================== GITHUB MATERIALS ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 pb-8">
-        <div class="card-lift relative noise bg-gradient-to-br from-emerald-600 to-teal-700 p-6 rounded-2xl shadow-lg text-white overflow-hidden">
-            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
-                        <i class="fab fa-github text-3xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-xl">
-                            <span class="lang-en">Workshop Materials</span>
-                            <span class="lang-ar font-arabic">مواد ورشة العمل</span>
-                        </h3>
-                        <p class="text-white/75 text-sm">
-                            <span class="lang-en">Access all resources and materials on GitHub</span>
-                            <span class="lang-ar font-arabic">الوصول إلى جميع الموارد والمواد على GitHub</span>
-                        </p>
-                    </div>
+                <p class="organizer-bio">
+                    <span class="lang-en">Ph.D. in Artificial Intelligence & Image Processing from the National Polytechnic Institute of Toulouse, France (M.S. 2014, Ph.D. 2017), with 10+ years of experience in AI and data science. Former Data Scientist at ATOS (2018–2023), with industry contributions in France alongside organizations such as Pierre Fabre, Airbus, CNES, and the European Space Agency (ESA) — spanning remote sensing, medical imaging, and computer vision.</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">حاصل على دكتوراه في الذكاء الاصطناعي ومعالجة الصور من المعهد الوطني للفنون التطبيقية في تولوز، فرنسا (ماجستير 2014، دكتوراه 2017)، مع أكثر من 10 سنوات من الخبرة في الذكاء الاصطناعي وعلوم البيانات. عالم بيانات سابق في ATOS (2018–2023)، مع مساهمات صناعية في فرنسا مع مؤسسات مثل Pierre Fabre وAirbus وCNES ووكالة الفضاء الأوروبية (ESA) — في مجالات الاستشعار عن بُعد والتصوير الطبي والرؤية الحاسوبية.</span>
+                </p>
+                <div class="organizer-links">
+                    <a href="mailto:abdelghafour.halimi@kaust.edu.sa" class="contact-pill gold">
+                        <i class="fas fa-envelope"></i>
+                        <span class="lang-en">Email</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">بريد</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="contact-pill blue">
+                        <i class="fab fa-linkedin"></i>
+                        <span class="lang-en">LinkedIn</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">لينكدإن</span>
+                    </a>
+                    <a href="https://www.ahalimi.com" class="contact-pill violet">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-en">Website</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">الموقع</span>
+                    </a>
                 </div>
-                <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main"
-                   class="inline-flex items-center gap-2 bg-white text-emerald-800 font-bold py-3 px-6 rounded-xl hover:bg-emerald-50 transition-colors shadow-md">
-                    <i class="fab fa-github text-lg"></i>
-                    <span class="lang-en">GitHub Repository</span>
-                    <span class="lang-ar font-arabic">مستودع GitHub</span>
-                </a>
             </div>
         </div>
     </div>
 
-    <!-- ===================== PREREQUISITES + AGENDA ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 py-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- ===================== PREREQUISITES + AGENDA + GITHUB ===================== -->
+    <div class="container reveal" style="margin-bottom:48px;">
+        <div class="grid-2" style="gap:16px;">
 
-            <!-- Prerequisites -->
-            <div class="card-lift bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-ocean-50 flex items-center justify-center">
-                        <i class="fas fa-clipboard-list text-2xl text-ocean-600"></i>
-                    </div>
-                    <div>
-                        <span class="section-label mb-1">
-                            <span class="lang-en">Requirements</span>
-                            <span class="lang-ar font-arabic">متطلبات</span>
-                        </span>
-                        <h3 class="font-bold text-2xl text-slate-900 mt-1">
-                            <span class="lang-en font-display">Pre-requisites</span>
-                            <span class="lang-ar font-arabic">المتطلبات المسبقة</span>
-                        </h3>
+            <!-- Left Column: Prerequisites + GitHub Materials -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+
+                <!-- Prerequisites -->
+                <div class="apple-panel" style="padding:28px;flex:0 0 auto;">
+                    <div style="position:relative;z-index:1;">
+                        <div style="margin-bottom:14px;">
+                            <span class="section-label" style="margin-bottom:10px;display:flex;">
+                                <span class="lang-en">Requirements</span>
+                                <span class="lang-ar" style="font-family:var(--font-arabic)">متطلبات</span>
+                            </span>
+                            <h3 style="margin-top:10px;">
+                                <span class="lang-en" style="font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--text-primary);">Pre-requisites</span>
+                                <span class="lang-ar" style="font-family:var(--font-arabic);font-size:1.45rem;font-weight:700;color:var(--text-primary);">المتطلبات المسبقة</span>
+                            </h3>
+                        </div>
+
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <div class="apple-prereq">
+                                <div class="apple-prereq-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <span style="font-size:0.78rem;color:var(--text-secondary);line-height:1.55;">
+                                    <span class="lang-en">Computer (Linux/Windows/Mac) with internet connection and terminal access</span>
+                                    <span class="lang-ar" style="font-family:var(--font-arabic)">كمبيوتر (لينكس/ويندوز/ماك) مع اتصال بالإنترنت ونافذة الأوامر</span>
+                                </span>
+                            </div>
+                            <div class="apple-prereq">
+                                <div class="apple-prereq-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <span style="font-size:0.78rem;color:var(--text-secondary);line-height:1.55;">
+                                    <span class="lang-en">Basic Python programming knowledge (Pandas, NumPy libraries)</span>
+                                    <span class="lang-ar" style="font-family:var(--font-arabic)">معرفة أساسية بلغة البرمجة بايثون (مكتبات Pandas, NumPy)</span>
+                                </span>
+                            </div>
+                            <div class="apple-prereq">
+                                <div class="apple-prereq-icon">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                                <span style="font-size:0.78rem;color:var(--text-secondary);line-height:1.55;">
+                                    <span class="lang-en">Experience with Conda package manager</span>
+                                    <span class="lang-ar" style="font-family:var(--font-arabic)">وجود خبرة مسبقة بالعمل مع مدير حزم Conda</span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
-                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <i class="fas fa-laptop text-ocean-600 text-xs"></i>
+
+                <!-- Workshop Materials (GitHub) -->
+                <div class="apple-github" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+                    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;">
+                        <div class="apple-github-icon" style="width:52px;height:52px;border-radius:16px;font-size:1.4rem;">
+                            <i class="fab fa-github"></i>
                         </div>
-                        <span class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Computer (Linux/Windows/Mac) with internet connection and terminal access</span>
-                            <span class="lang-ar font-arabic">كمبيوتر (لينكس/ويندوز/ماك) مع اتصال بالإنترنت ونافذة الأوامر</span>
-                        </span>
-                    </li>
-                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
-                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <i class="fab fa-python text-ocean-600 text-xs"></i>
+                        <div>
+                            <h3 style="font-weight:600;font-size:1.05rem;color:var(--text-primary);margin-bottom:4px;letter-spacing:-0.01em;">
+                                <span class="lang-en">Workshop Materials</span>
+                                <span class="lang-ar" style="font-family:var(--font-arabic)">مواد ورشة العمل</span>
+                            </h3>
+                            <p style="font-size:0.8rem;color:var(--text-secondary);">
+                                <span class="lang-en">Access all resources and materials on GitHub</span>
+                                <span class="lang-ar" style="font-family:var(--font-arabic)">الوصول إلى جميع الموارد والمواد على GitHub</span>
+                            </p>
                         </div>
-                        <span class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Basic Python programming knowledge (Pandas, NumPy libraries)</span>
-                            <span class="lang-ar font-arabic">معرفة أساسية بلغة البرمجة بايثون (مكتبات Pandas, NumPy)</span>
-                        </span>
-                    </li>
-                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
-                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <i class="fas fa-box-open text-ocean-600 text-xs"></i>
-                        </div>
-                        <span class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Experience with Conda package manager</span>
-                            <span class="lang-ar font-arabic">وجود خبرة مسبقة بالعمل مع مدير حزم Conda</span>
-                        </span>
-                    </li>
-                </ul>
+                        <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="apple-pill-btn ghost" style="padding:11px 24px;white-space:nowrap;width:auto;">
+                            <i class="fab fa-github"></i>
+                            <span class="lang-en">GitHub Repository</span>
+                            <span class="lang-ar" style="font-family:var(--font-arabic)">مستودع GitHub</span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Agenda -->
-            <div class="card-lift bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-royal-50 flex items-center justify-center">
-                        <i class="fas fa-calendar-day text-2xl text-royal-600"></i>
-                    </div>
-                    <div>
-                        <span class="section-label mb-1">
+            <!-- Agenda (Right Column) -->
+            <div class="apple-panel" style="padding:28px;height:100%;">
+                <div style="position:relative;z-index:1;">
+                    <div style="margin-bottom:14px;">
+                        <span class="section-label" style="margin-bottom:10px;display:flex;">
                             <span class="lang-en">Schedule</span>
-                            <span class="lang-ar font-arabic">الجدول</span>
+                            <span class="lang-ar" style="font-family:var(--font-arabic)">الجدول</span>
                         </span>
-                        <h3 class="font-bold text-2xl text-slate-900 mt-1">
-                            <span class="lang-en font-display">Agenda</span>
-                            <span class="lang-ar font-arabic">جدول الأعمال</span>
+                        <h3 style="margin-top:10px;">
+                            <span class="lang-en" style="font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--text-primary);">Agenda</span>
+                            <span class="lang-ar" style="font-family:var(--font-arabic);font-size:1.45rem;font-weight:700;color:var(--text-primary);">جدول الأعمال</span>
                         </h3>
                     </div>
-                </div>
-                <div class="overflow-x-auto rounded-xl border border-slate-100">
-                    <table class="min-w-full">
-                        <thead>
-                            <tr class="bg-gradient-to-r from-royal-50 to-ocean-50">
-                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
-                                    <span class="lang-en">Time</span>
-                                    <span class="lang-ar font-arabic">الوقت</span>
-                                </th>
-                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
-                                    <span class="lang-en">Topic</span>
-                                    <span class="lang-ar font-arabic">الموضوع</span>
-                                </th>
-                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
-                                    <span class="lang-en">Speaker</span>
-                                    <span class="lang-ar font-arabic">المتحدث</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <tr class="agenda-row">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:00 – 2:10</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en">Welcome & Introduction</span>
-                                    <span class="lang-ar font-arabic">الترحيب والمقدمة</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                            <tr class="agenda-row">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:10 – 2:35</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en">Intro to Machine Learning (Core Concepts)</span>
-                                    <span class="lang-ar font-arabic">مقدمة في تعلم الآلة (المفاهيم الأساسية)</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                            <tr class="agenda-row bg-amber-50/50">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:35 – 2:55</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en"><i class="fas fa-flask text-amber-500 mr-1"></i> Real-Time Demos: ML in Action</span>
-                                    <span class="lang-ar font-arabic"><i class="fas fa-flask text-amber-500 ml-1"></i> عروض حية: تعلم الآلة قيد التنفيذ</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                            <tr class="agenda-row">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:55 – 3:20</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en">Intro to Deep Learning & Neural Networks</span>
-                                    <span class="lang-ar font-arabic">مقدمة في التعلم العميق والشبكات العصبية</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                            <tr class="agenda-row bg-amber-50/50">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">3:20 – 3:45</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en"><i class="fas fa-eye text-amber-500 mr-1"></i> Real-Time Demos: DL & Computer Vision</span>
-                                    <span class="lang-ar font-arabic"><i class="fas fa-eye text-amber-500 ml-1"></i> عروض حية: التعلم العميق والرؤية الحاسوبية</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                            <tr class="agenda-row">
-                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">3:45 – 4:00</td>
-                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
-                                    <span class="lang-en">Conclusion & Q&A</span>
-                                    <span class="lang-ar font-arabic">الخاتمة والأسئلة</span>
-                                </td>
-                                <td class="px-4 py-3 text-sm text-slate-600">
-                                    <span class="lang-en">Abdelghafour Halimi</span>
-                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <div class="timeline-item">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;">2:00 – 2:10</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en">Welcome & Introduction</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">الترحيب والمقدمة</span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;">2:10 – 2:35</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en">Intro to Machine Learning (Core Concepts)</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">مقدمة في التعلم الآلي (المفاهيم الأساسية)</span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item demo">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;color:var(--accent-gold);">2:35 – 2:55</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en"><i class="fas fa-flask" style="color:var(--accent-gold);margin-right:6px;font-size:0.8rem;"></i>Real-Time Demos: ML in Action</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عروض حية: التعلم الآلي قيد التنفيذ<i class="fas fa-flask" style="color:var(--accent-gold);margin-right:6px;font-size:0.8rem;"></i></span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;">2:55 – 3:20</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en">Intro to Deep Learning & Neural Networks</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">مقدمة في التعلم العميق والشبكات العصبية</span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item demo">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;color:var(--accent-gold);">3:20 – 3:45</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en"><i class="fas fa-eye" style="color:var(--accent-gold);margin-right:6px;font-size:0.8rem;"></i>Real-Time Demos: DL & Computer Vision</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عروض حية: التعلم العميق والرؤية الحاسوبية<i class="fas fa-eye" style="color:var(--accent-gold);margin-right:6px;font-size:0.8rem;"></i></span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div style="display:flex;align-items:flex-start;gap:12px;">
+                                <span class="timeline-time" style="min-width:80px;padding-top:2px;">3:45 – 4:00</span>
+                                <div>
+                                    <p style="font-weight:600;font-size:0.83rem;color:var(--text-primary);">
+                                        <span class="lang-en">Conclusion & Q&A</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">الخاتمة والأسئلة</span>
+                                    </p>
+                                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                        <span class="lang-en">Abdelghafour Halimi</span>
+                                        <span class="lang-ar" style="font-family:var(--font-arabic)">عبد الغفور حليمي</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -603,57 +2101,51 @@
     </div>
 
     <!-- ===================== OVERVIEW ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 py-8">
-        <div class="card-lift relative noise bg-gradient-to-br from-slate-900 via-midnight to-royal-900 p-10 rounded-2xl shadow-xl text-white overflow-hidden">
-            <div class="absolute top-0 right-0 w-72 h-72 bg-royal-500 rounded-full filter blur-[100px] opacity-20"></div>
-            <div class="absolute bottom-0 left-0 w-56 h-56 bg-ocean-500 rounded-full filter blur-[80px] opacity-15"></div>
-
-            <div class="relative z-10">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-sm">
-                        <i class="fas fa-lightbulb text-3xl text-amber-300"></i>
-                    </div>
-                    <div>
-                        <span class="section-label !text-amber-300 !bg-amber-300/10 !border-amber-300/20">
-                            <span class="lang-en">About</span>
-                            <span class="lang-ar font-arabic">حول</span>
-                        </span>
-                        <h2 class="font-bold text-3xl mt-1">
-                            <span class="lang-en font-display">Overview</span>
-                            <span class="lang-ar font-arabic">نظرة عامة</span>
-                        </h2>
-                    </div>
+    <div class="container reveal" style="margin-bottom:48px;">
+        <div class="apple-overview grain" style="position:relative;">
+            <div class="orb" style="width:250px;height:250px;background:var(--glow-violet);top:-80px;right:-60px;"></div>
+            <div class="orb" style="width:200px;height:200px;background:var(--glow-cyan);bottom:-60px;left:-40px;"></div>
+            <div style="position:relative;z-index:2;">
+                <div style="margin-bottom:24px;">
+                    <span class="section-label" style="color:var(--accent-gold);margin-bottom:10px;display:flex;">
+                        <span class="lang-en">About</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">حول</span>
+                    </span>
+                    <h2 style="margin-top:10px;">
+                        <span class="lang-en" style="font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--text-primary);">Overview</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic);font-size:1.6rem;font-weight:700;color:var(--text-primary);">نظرة عامة</span>
+                    </h2>
                 </div>
 
-                <div class="space-y-5 text-white/85 leading-relaxed">
+                <div style="display:flex;flex-direction:column;gap:20px;color:var(--text-secondary);line-height:1.7;">
                     <!-- EN overview -->
-                    <div class="lang-en space-y-4">
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
-                            <span>This workshop provides a comprehensive introduction to the fundamental pillars of artificial intelligence: <strong class="text-white">Machine Learning and Deep Learning</strong>. It bridges the gap between traditional ML algorithms and the latest neural network developments.</span>
+                    <div class="lang-en" style="display:flex;flex-direction:column;gap:14px;">
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
+                            <span>This workshop provides a comprehensive introduction to the fundamental pillars of artificial intelligence: <strong style="color:var(--text-primary);font-weight:600;">Machine Learning and Deep Learning</strong>. It bridges the gap between traditional ML algorithms and the latest neural network developments.</span>
                         </p>
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
                             <span>Attendees will gain foundational understanding of data-driven decision making, transitioning from simple classifiers to complex deep learning architectures.</span>
                         </p>
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
-                            <span>Whether you're curious about image classification, computer vision, or how AI models learn from data, this workshop with <strong class="text-white">real-time demonstrations</strong> is your gateway into the transformative world of ML and Deep Learning.</span>
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
+                            <span>Whether you're curious about image classification, computer vision, or how AI models learn from data, this workshop with <strong style="color:var(--text-primary);font-weight:600;">real-time demonstrations</strong> is your gateway into the transformative world of ML and Deep Learning.</span>
                         </p>
                     </div>
                     <!-- AR overview -->
-                    <div class="lang-ar space-y-4 font-arabic">
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
-                            <span>صُممت ورشة العمل هذه لتقديم مقدمة شاملة للركائز الأساسية للذكاء الاصطناعي: <strong class="text-white">تعلم الآلة والتعلم العميق</strong>. حيث ستسد الفجوة بين خوارزميات تعلم الآلة التقليدية وأحدث تطورات الشبكات العصبية.</span>
+                    <div class="lang-ar" style="display:flex;flex-direction:column;gap:14px;font-family:var(--font-arabic);">
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
+                            <span>صُممت ورشة العمل هذه لتقديم مقدمة شاملة للركائز الأساسية للذكاء الاصطناعي: <strong style="color:var(--text-primary);font-weight:700;">التعلم الآلي والتعلم العميق</strong>. حيث ستسد الفجوة بين خوارزميات التعلم الآلي التقليدية وأحدث تطورات الشبكات العصبية.</span>
                         </p>
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
                             <span>سيكتسب الحضور فهماً أساسياً لكيفية اتخاذ القرارات القائمة على البيانات، والانتقال من المصنفات البسيطة إلى معماريات التعلم العميق المعقدة.</span>
                         </p>
-                        <p class="flex items-start gap-3">
-                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
-                            <span>سواء كنت فضوليًا بشأن تصنيف الصور أو الرؤية الحاسوبية أو كيفية تعلم نماذج الذكاء الاصطناعي من البيانات، فإن ورشة العمل هذه مع <strong class="text-white">العروض التوضيحية الحية</strong> هي بوابتك إلى عالم تعلم الآلة والتعلم العميق.</span>
+                        <p style="display:flex;align-items:flex-start;gap:12px;">
+                            <span class="overview-dot"></span>
+                            <span>سواء كنت فضوليًا بشأن تصنيف الصور أو الرؤية الحاسوبية أو كيفية تعلم نماذج الذكاء الاصطناعي من البيانات، فإن ورشة العمل هذه مع <strong style="color:var(--text-primary);font-weight:700;">العروض التوضيحية الحية</strong> هي بوابتك إلى عالم التعلم الآلي والتعلم العميق.</span>
                         </p>
                     </div>
                 </div>
@@ -662,118 +2154,147 @@
     </div>
 
     <!-- ===================== WHO SHOULD ATTEND ===================== -->
-    <div class="container mx-auto max-w-5xl px-4 py-8 mb-8">
-        <div class="card-lift bg-white p-10 rounded-2xl shadow-md">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-royal-50 flex items-center justify-center">
-                    <i class="fas fa-users text-3xl text-royal-600"></i>
-                </div>
-                <div>
-                    <span class="section-label mb-1">
-                        <span class="lang-en">Audience</span>
-                        <span class="lang-ar font-arabic">الجمهور</span>
-                    </span>
-                    <h2 class="font-bold text-3xl text-slate-900 mt-1">
-                        <span class="lang-en font-display">Who Should Attend?</span>
-                        <span class="lang-ar font-arabic">من يجب أن يحضر؟</span>
-                    </h2>
+    <div class="container" style="margin-bottom:48px;">
+        <div style="margin-bottom:22px;" class="reveal">
+            <span class="section-label" style="margin-bottom:10px;display:flex;">
+                <span class="lang-en">Audience</span>
+                <span class="lang-ar" style="font-family:var(--font-arabic)">الجمهور</span>
+            </span>
+            <h2 style="margin-top:10px;">
+                <span class="lang-en" style="font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--text-primary);">Who Should Attend?</span>
+                <span class="lang-ar" style="font-family:var(--font-arabic);font-size:1.6rem;font-weight:700;color:var(--text-primary);">من يجب أن يحضر؟</span>
+            </h2>
+        </div>
+
+        <div class="grid-2 reveal-stagger reveal">
+            <div class="apple-feature">
+                <div style="display:flex;align-items:flex-start;gap:14px;">
+                    <div class="apple-feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">
+                        <span class="lang-en">Anyone (beginner) wanting to understand the full spectrum of AI, from Machine Learning to Deep Learning</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">أي شخص (مبتدئ) يرغب في فهم الطيف الكامل للذكاء الاصطناعي، من التعلم الآلي إلى التعلم العميق</span>
+                    </p>
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
-                            <i class="fas fa-user-graduate text-royal-600"></i>
-                        </div>
-                        <p class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Anyone (beginner) wanting to understand the full spectrum of AI, from Machine Learning to Deep Learning</span>
-                            <span class="lang-ar font-arabic">أي شخص (مبتدئ) يرغب في فهم الطيف الكامل للذكاء الاصطناعي، من تعلم الآلة إلى التعلم العميق</span>
-                        </p>
+            <div class="apple-feature">
+                <div style="display:flex;align-items:flex-start;gap:14px;">
+                    <div class="apple-feature-icon">
+                        <i class="fas fa-code"></i>
                     </div>
+                    <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">
+                        <span class="lang-en">Programmers looking to expand their data science skills to increase their professional value</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">المبرمجون الراغبون في توسيع مهاراتهم في علوم البيانات لزيادة قيمتهم المهنية</span>
+                    </p>
                 </div>
-                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
-                            <i class="fas fa-code text-royal-600"></i>
-                        </div>
-                        <p class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Programmers looking to expand their data science skills to increase their professional value</span>
-                            <span class="lang-ar font-arabic">المبرمجون الراغبون في توسيع مهاراتهم في علوم البيانات لزيادة قيمتهم المهنية</span>
-                        </p>
+            </div>
+            <div class="apple-feature">
+                <div style="display:flex;align-items:flex-start;gap:14px;">
+                    <div class="apple-feature-icon">
+                        <i class="fas fa-briefcase"></i>
                     </div>
+                    <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">
+                        <span class="lang-en">Entrepreneurs and professionals wanting to understand how to apply these powerful tools in their fields</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">رواد الأعمال والمهنيون الراغبون في فهم كيفية تطبيق هذه الأدوات القوية في مجالاتهم</span>
+                    </p>
                 </div>
-                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
-                            <i class="fas fa-briefcase text-royal-600"></i>
-                        </div>
-                        <p class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Entrepreneurs and professionals wanting to understand how to apply these powerful tools in their fields</span>
-                            <span class="lang-ar font-arabic">رواد الأعمال والمهنيون الراغبون في فهم كيفية تطبيق هذه الأدوات القوية في مجالاتهم</span>
-                        </p>
+            </div>
+            <div class="apple-feature">
+                <div style="display:flex;align-items:flex-start;gap:14px;">
+                    <div class="apple-feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
                     </div>
-                </div>
-                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
-                            <i class="fas fa-chalkboard-teacher text-royal-600"></i>
-                        </div>
-                        <p class="text-slate-700 text-sm leading-relaxed">
-                            <span class="lang-en">Anyone wanting to learn from experts who don't just teach but have real-world experience</span>
-                            <span class="lang-ar font-arabic">أي شخص يريد أن يتعلم من خبراء لا يكتفون بالتدريس فقط بل لديهم خبرة عملية حقيقية</span>
-                        </p>
-                    </div>
+                    <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">
+                        <span class="lang-en">Anyone wanting to learn from experts who don't just teach but have real-world experience</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">أي شخص يريد أن يتعلم من خبراء لا يكتفون بالتدريس فقط بل لديهم خبرة عملية حقيقية</span>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ===================== FOOTER ===================== -->
-    <footer class="relative noise bg-midnight text-white py-12 overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-royal-500/40 to-transparent"></div>
-        <div class="container mx-auto max-w-5xl px-4 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-center md:text-left">
-                    <h3 class="text-xl font-bold mb-1">
-                        <span class="lang-en font-display">AI Tools Workshop Series</span>
-                        <span class="lang-ar font-arabic">سلسلة ورشة عمل أدوات الذكاء الاصطناعي</span>
+    <footer class="grain">
+        <div class="section-divider"></div>
+        <div class="container" style="padding-top:36px;padding-bottom:36px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;">
+                <div>
+                    <h3 style="font-weight:700;font-size:1.1rem;color:var(--text-primary);margin-bottom:6px;">
+                        <span class="lang-en" style="font-family:var(--font-display);font-weight:400;font-size:1.3rem;">AI Tools Workshop Series</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">سلسلة ورشة عمل أدوات الذكاء الاصطناعي</span>
                     </h3>
-                    <p class="text-slate-400 text-sm">
+                    <p style="font-size:0.8rem;color:var(--text-muted);">
                         <span class="lang-en">Empowering Knowledge in AI, Machine Learning & Deep Learning</span>
-                        <span class="lang-ar font-arabic">تمكين المعرفة في مجال الذكاء الاصطناعي وتعلم الآلة والتعلم العميق</span>
+                        <span class="lang-ar" style="font-family:var(--font-arabic)">تمكين المعرفة في مجال الذكاء الاصطناعي والتعلم الآلي والتعلم العميق</span>
                     </p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-blue-600/30 flex items-center justify-center transition-colors border border-white/10">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="footer-social">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/15 flex items-center justify-center transition-colors border border-white/10">
+                    <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="footer-social">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.youtube.com/@kaustvislab/videos" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-red-600/30 flex items-center justify-center transition-colors border border-white/10">
+                    <a href="https://www.youtube.com/@kaustvislab/videos" class="footer-social">
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
             </div>
-            <div class="text-center mt-8 pt-6 border-t border-white/5 text-slate-500 text-xs">
+            <div style="text-align:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--border);font-size:0.7rem;color:var(--text-muted);">
                 <p>
                     <span class="lang-en">&copy; 2026 Dr. Abdelghafour HALIMI. All rights reserved.</span>
-                    <span class="lang-ar font-arabic">&copy; 2026 د. عبد الغفور حليمي. جميع الحقوق محفوظة.</span>
+                    <span class="lang-ar" style="font-family:var(--font-arabic)">&copy; 2026 د. عبد الغفور حليمي. جميع الحقوق محفوظة.</span>
                 </p>
             </div>
         </div>
     </footer>
 
     <!-- ===================== SCROLL TO TOP ===================== -->
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-            class="fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-br from-ocean-600 to-royal-600 text-white rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center z-40"
-            id="scrollTop" style="display:none;">
-        <i class="fas fa-arrow-up"></i>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up" style="font-size:0.9rem;"></i>
     </button>
 
     <!-- ===================== JAVASCRIPT ===================== -->
     <script>
+        // ---- Theme Toggle ----
+        function getStoredTheme() {
+            try { return localStorage.getItem('ws-theme'); } catch(e) { return null; }
+        }
+        function setStoredTheme(t) {
+            try { localStorage.setItem('ws-theme', t); } catch(e) {}
+        }
+
+        // Apply stored theme immediately to prevent flash
+        (function() {
+            const stored = getStoredTheme();
+            if (stored === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isLight = html.getAttribute('data-theme') === 'light';
+
+            // Enable transitions
+            html.classList.add('theme-transitioning');
+
+            if (isLight) {
+                html.removeAttribute('data-theme');
+                setStoredTheme('dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                setStoredTheme('light');
+            }
+
+            // Remove transition class after animation completes
+            setTimeout(() => {
+                html.classList.remove('theme-transitioning');
+            }, 600);
+        }
+
+        // ---- Language Toggle ----
         let currentLang = 'ar';
 
         function setLangUI(lang) {
@@ -785,7 +2306,6 @@
             if (lang === 'ar') {
                 html.setAttribute('lang', 'ar');
                 html.setAttribute('dir', 'rtl');
-                // Pill slides RIGHT to cover العربية
                 pill.style.left = 'calc(50%)';
                 enLabel.classList.remove('active');
                 enLabel.classList.add('inactive');
@@ -794,7 +2314,6 @@
             } else {
                 html.setAttribute('lang', 'en');
                 html.setAttribute('dir', 'ltr');
-                // Pill slides LEFT to cover English
                 pill.style.left = '3px';
                 enLabel.classList.remove('inactive');
                 enLabel.classList.add('active');
@@ -808,10 +2327,36 @@
             setLangUI(currentLang);
         }
 
-        // Scroll-to-top visibility
+        // ---- Scroll-to-top visibility ----
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
             scrollBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+        });
+
+        // ---- Scroll Reveal (supports both .reveal and .reveal-stagger) ----
+        const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -30px 0px'
+        });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ---- Subtle Parallax on Orbs ----
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.hero .orb');
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 8;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
         });
     </script>
 
