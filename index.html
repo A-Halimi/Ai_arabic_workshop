@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Workshop | ML & Deep Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                        arabic: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        midnight: '#0a0e27',
+                        ocean: { 50: '#eef6ff', 100: '#d9ecff', 200: '#bcdcff', 300: '#8ec5ff', 400: '#59a3ff', 500: '#3380ff', 600: '#1a5ff5', 700: '#144ae0', 800: '#173db5', 900: '#1a388e' },
+                        royal: { 50: '#f5f0ff', 100: '#ede5ff', 200: '#dcceff', 300: '#c4a8ff', 400: '#a574ff', 500: '#8b3dff', 600: '#7916f7', 700: '#6b0ae3', 800: '#5a0bbf', 900: '#4b0d9c' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ---- Base ---- */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: #f7f8fc; overflow-x: hidden; }
+        [data-lang="ar"] body, html[dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
+
+        /* ---- Language switch ---- */
+        .lang-en, .lang-ar { transition: opacity 0.35s ease, transform 0.35s ease; }
+        html[dir="rtl"] .lang-en { display: none !important; }
+        html[dir="ltr"] .lang-ar { display: none !important; }
+
+        /* ---- Hero ---- */
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a388e 40%, #6b0ae3 75%, #8b3dff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0; right: 0;
+            height: 80px;
+            background: linear-gradient(to top, #f7f8fc, transparent);
+        }
+        .hero-glow {
+            position: absolute;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.18;
+            pointer-events: none;
+        }
+
+        /* ---- Cards ---- */
+        .card-lift {
+            transition: transform 0.4s cubic-bezier(.22,.68,0,1.1), box-shadow 0.4s ease;
+        }
+        .card-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.12);
+        }
+
+        /* ---- Accent bar ---- */
+        .accent-bar { position: relative; }
+        .accent-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            border-radius: 4px;
+        }
+        html[dir="rtl"] .accent-bar::before { left: auto; right: 0; }
+        .accent-blue::before { background: linear-gradient(to bottom, #3380ff, #1a5ff5); }
+        .accent-red::before { background: linear-gradient(to bottom, #ef4444, #dc2626); }
+        .accent-emerald::before { background: linear-gradient(to bottom, #10b981, #059669); }
+        .accent-purple::before { background: linear-gradient(to bottom, #8b3dff, #6b0ae3); }
+
+        /* ---- Buttons ---- */
+        .btn-primary {
+            background: linear-gradient(135deg, #3380ff, #8b3dff);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #8b3dff, #3380ff);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+        .btn-primary span, .btn-primary i { position: relative; z-index: 1; }
+
+        .btn-live {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            transition: all 0.3s ease;
+        }
+        .btn-live:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(239,68,68,0.35); }
+
+        /* ---- Toggle ---- */
+        .lang-toggle {
+            background: #0a0e27;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        .lang-toggle:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1); }
+        .lang-toggle-pill {
+            transition: left 0.4s cubic-bezier(.22,.68,0,1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #3380ff, #8b3dff);
+        }
+        .lang-toggle-label {
+            transition: color 0.3s ease, font-weight 0.3s ease;
+            user-select: none;
+        }
+        .lang-toggle-label.active { color: #ffffff; font-weight: 800; }
+        .lang-toggle-label.inactive { color: rgba(255,255,255,0.45); font-weight: 500; }
+        .lang-toggle-icon { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+        /* ---- Table ---- */
+        .agenda-row { transition: background 0.2s ease; }
+        .agenda-row:hover { background: rgba(51,128,255,0.06); }
+
+        /* ---- Banner ---- */
+        .banner-img {
+            height: 280px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(.22,.68,0,1.1);
+        }
+        .banner-wrap:hover .banner-img { transform: scale(1.04); }
+
+        /* ---- Animations ---- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .anim-fade-up { animation: fadeUp 0.7s ease both; }
+        .anim-delay-1 { animation-delay: 0.1s; }
+        .anim-delay-2 { animation-delay: 0.2s; }
+        .anim-delay-3 { animation-delay: 0.3s; }
+        .anim-delay-4 { animation-delay: 0.4s; }
+        .anim-delay-5 { animation-delay: 0.5s; }
+
+        /* ---- Noise texture ---- */
+        .noise::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* ---- Section divider ---- */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #8b3dff;
+            padding: 6px 14px;
+            background: rgba(139,61,255,0.08);
+            border-radius: 50px;
+            border: 1px solid rgba(139,61,255,0.15);
+        }
+
+        /* ---- Scrollbar ---- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f7f8fc; }
+        ::-webkit-scrollbar-thumb { background: #c4a8ff; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b3dff; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- ===================== LANGUAGE TOGGLE (fixed) ===================== -->
+    <div class="fixed top-5 z-50 anim-fade-up" style="right:1.5rem;">
+        <button onclick="toggleLang()" class="lang-toggle rounded-2xl px-1.5 py-1.5 flex items-center cursor-pointer" id="langBtn" aria-label="Toggle Language" dir="ltr">
+            <div class="relative flex items-center rounded-xl" dir="ltr" style="width:180px;height:42px;">
+                <div class="lang-toggle-pill absolute rounded-xl" id="langPill" style="width:calc(50% - 3px);height:36px;top:3px;left:calc(50%);"></div>
+                <div class="relative z-10 flex-1 flex items-center justify-center gap-1.5 lang-toggle-label inactive" id="langEN">
+                    <i class="fas fa-globe text-xs lang-toggle-icon"></i>
+                    <span class="text-sm">English</span>
+                </div>
+                <div class="relative z-10 flex-1 flex items-center justify-center gap-1.5 lang-toggle-label active font-arabic" id="langAR">
+                    <span class="text-sm">العربية</span>
+                    <i class="fas fa-mosque text-xs lang-toggle-icon"></i>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero-bg relative pt-20 pb-28 px-4">
+        <div class="hero-glow bg-ocean-400" style="top:-200px;left:-100px;"></div>
+        <div class="hero-glow bg-royal-500" style="top:100px;right:-200px;"></div>
+
+        <div class="container mx-auto max-w-5xl relative z-10 text-center">
+            <!-- Series label -->
+            <div class="anim-fade-up mb-6">
+                <span class="lang-en inline-block px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/20 text-white/80 bg-white/5 backdrop-blur-sm">
+                    AI Tools Workshop Series
+                </span>
+                <span class="lang-ar inline-block px-5 py-2 rounded-full text-sm font-bold tracking-wide border border-white/20 text-white/80 bg-white/5 backdrop-blur-sm font-arabic">
+                    سلسلة ورشة عمل أدوات الذكاء الاصطناعي
+                </span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="anim-fade-up anim-delay-1">
+                <span class="lang-en block font-display text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
+                    Introduction to<br>
+                    <span class="bg-gradient-to-r from-ocean-300 via-royal-300 to-ocean-300 bg-clip-text text-transparent">Machine Learning & Deep Learning</span><br>
+                    <span class="text-3xl md:text-4xl lg:text-5xl text-white/90">with Real-Time Demos</span>
+                </span>
+                <span class="lang-ar block font-arabic text-4xl md:text-5xl lg:text-6xl font-black text-white leading-relaxed">
+                    مقدمة في تعلم الآلة والتعلم العميق
+                    <br>
+                    <span class="bg-gradient-to-r from-ocean-300 via-royal-300 to-ocean-300 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl">مع عروض توضيحية حية</span>
+                </span>
+            </h1>
+
+            <!-- Subtitle: date + venue -->
+            <div class="anim-fade-up anim-delay-2 mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+                <div class="flex items-center gap-2 text-white/85">
+                    <i class="far fa-calendar-alt text-ocean-300"></i>
+                    <span class="lang-en font-body text-lg">Wednesday, March 31, 2026</span>
+                    <span class="lang-ar font-arabic text-lg">الأربعاء 31 مارس 2026</span>
+                </div>
+                <div class="hidden sm:block w-px h-5 bg-white/25"></div>
+                <div class="flex items-center gap-2 text-white/85">
+                    <i class="far fa-clock text-ocean-300"></i>
+                    <span class="lang-en font-body text-lg">2:00 PM – 4:00 PM</span>
+                    <span class="lang-ar font-arabic text-lg">2 بعد الظهر – 4 مساءً</span>
+                </div>
+                <div class="hidden sm:block w-px h-5 bg-white/25"></div>
+                <div class="flex items-center gap-2 text-white/85">
+                    <i class="fab fa-youtube text-red-400"></i>
+                    <span class="lang-en font-body text-lg">YouTube Live</span>
+                    <span class="lang-ar font-arabic text-lg">بث مباشر على يوتيوب</span>
+                </div>
+            </div>
+
+            <!-- CTA buttons -->
+            <div class="anim-fade-up anim-delay-3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://kaustforms.formstack.com/forms/placeholder_link"
+                   class="btn-primary inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-xl text-lg shadow-lg">
+                    <span class="lang-en"><i class="fas fa-user-plus mr-1"></i> Register Now</span>
+                    <span class="lang-ar font-arabic"><i class="fas fa-user-plus ml-1"></i> سجّل الآن</span>
+                </a>
+                <a href="https://www.youtube.com/watch?v=placeholder"
+                   class="btn-live inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-xl text-lg shadow-lg">
+                    <span class="lang-en"><i class="fas fa-play-circle mr-1"></i> Join Livestream</span>
+                    <span class="lang-ar font-arabic"><i class="fas fa-play-circle ml-1"></i> انضم للبث المباشر</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== BANNER IMAGES ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 -mt-14 relative z-20">
+        <div class="flex flex-col md:flex-row justify-center gap-5">
+            <div class="banner-wrap overflow-hidden rounded-2xl shadow-2xl w-full md:w-1/2 ring-1 ring-white/50">
+                <img src="kvl.png" alt="Workshop Series Banner" class="banner-img" />
+            </div>
+            <div class="banner-wrap overflow-hidden rounded-2xl shadow-2xl w-full md:w-1/2 ring-1 ring-white/50">
+                <img src="AI_arabic_thumbnail.png" alt="AI Workshop Banner" class="banner-img" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== INFO CARDS ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 py-14">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <!-- Date Card -->
+            <div class="card-lift accent-bar accent-blue bg-white p-6 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-11 h-11 rounded-xl bg-ocean-50 flex items-center justify-center">
+                        <i class="far fa-calendar-check text-xl text-ocean-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-ocean-900">
+                        <span class="lang-en">Date & Time</span>
+                        <span class="lang-ar font-arabic">التاريخ والوقت</span>
+                    </h3>
+                </div>
+                <ul class="space-y-2 text-slate-600 text-sm">
+                    <li class="flex items-center gap-2">
+                        <i class="far fa-calendar-alt text-ocean-400 text-xs"></i>
+                        <span class="lang-en">Wednesday, March 31, 2026</span>
+                        <span class="lang-ar font-arabic">الأربعاء 31 مارس 2026</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i class="far fa-clock text-ocean-400 text-xs"></i>
+                        <span class="lang-en">2:00 PM – 4:00 PM</span>
+                        <span class="lang-ar font-arabic">2 بعد الظهر – 4 مساءً</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Venue Card -->
+            <div class="card-lift accent-bar accent-red bg-white p-6 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
+                        <i class="fab fa-youtube text-xl text-red-500"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-red-900">
+                        <span class="lang-en">Venue</span>
+                        <span class="lang-ar font-arabic">المكان</span>
+                    </h3>
+                </div>
+                <p class="text-slate-600 text-sm mb-4">
+                    <span class="lang-en">YouTube LIVE Session</span>
+                    <span class="lang-ar font-arabic">جلسة بث مباشر على يوتيوب</span>
+                </p>
+                <a href="https://www.youtube.com/watch?v=placeholder"
+                   class="btn-live flex items-center justify-center text-white py-2.5 px-4 rounded-xl font-bold text-sm w-full">
+                    <span class="lang-en"><i class="fas fa-play-circle mr-2"></i>Join Livestream</span>
+                    <span class="lang-ar font-arabic"><i class="fas fa-play-circle ml-2"></i>انضم للبث</span>
+                </a>
+            </div>
+
+            <!-- Organizer Card -->
+            <div class="card-lift accent-bar accent-emerald bg-white p-6 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-emerald-900">
+                        <span class="lang-en">Organizer</span>
+                        <span class="lang-ar font-arabic">المنظّم</span>
+                    </h3>
+                </div>
+                <p class="font-bold text-slate-800 text-sm">
+                    <span class="lang-en">Dr. Abdelghafour HALIMI</span>
+                    <span class="lang-ar font-arabic">د. عبد الغفور حليمي</span>
+                </p>
+                <p class="text-slate-500 text-xs mb-3">
+                    <span class="lang-en">Visualization Core Laboratory</span>
+                    <span class="lang-ar font-arabic">مختبر التصوير المرئي الأساسي</span>
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="mailto:abdelghafour.halimi@kaust.edu.sa" class="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-900 transition-colors bg-emerald-50 px-2.5 py-1 rounded-lg">
+                        <i class="fas fa-envelope text-[10px]"></i>
+                        <span class="lang-en">Email</span>
+                        <span class="lang-ar font-arabic">بريد</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900 transition-colors bg-blue-50 px-2.5 py-1 rounded-lg">
+                        <i class="fab fa-linkedin text-[10px]"></i>
+                        <span class="lang-en">LinkedIn</span>
+                        <span class="lang-ar font-arabic">لينكدإن</span>
+                    </a>
+                    <a href="https://www.ahalimi.com" class="inline-flex items-center gap-1 text-xs font-medium text-purple-700 hover:text-purple-900 transition-colors bg-purple-50 px-2.5 py-1 rounded-lg">
+                        <i class="fas fa-globe text-[10px]"></i>
+                        <span class="lang-en">Website</span>
+                        <span class="lang-ar font-arabic">الموقع</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Register Card -->
+            <div class="card-lift accent-bar accent-purple bg-white p-6 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-11 h-11 rounded-xl bg-royal-50 flex items-center justify-center">
+                        <i class="fas fa-user-plus text-xl text-royal-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-royal-900">
+                        <span class="lang-en">Register</span>
+                        <span class="lang-ar font-arabic">التسجيل</span>
+                    </h3>
+                </div>
+                <p class="text-slate-600 text-sm mb-4">
+                    <span class="lang-en">Secure your spot for this workshop</span>
+                    <span class="lang-ar font-arabic">احجز مقعدك في ورشة العمل</span>
+                </p>
+                <a href="https://kaustforms.formstack.com/forms/placeholder_link"
+                   class="btn-primary flex items-center justify-center text-white py-2.5 px-4 rounded-xl font-bold text-sm w-full">
+                    <span class="lang-en"><i class="fas fa-sign-in-alt mr-2"></i>Register Now</span>
+                    <span class="lang-ar font-arabic"><i class="fas fa-sign-in-alt ml-2"></i>سجّل الآن</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===================== GITHUB MATERIALS ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 pb-8">
+        <div class="card-lift relative noise bg-gradient-to-br from-emerald-600 to-teal-700 p-6 rounded-2xl shadow-lg text-white overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
+                        <i class="fab fa-github text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">
+                            <span class="lang-en">Workshop Materials</span>
+                            <span class="lang-ar font-arabic">مواد ورشة العمل</span>
+                        </h3>
+                        <p class="text-white/75 text-sm">
+                            <span class="lang-en">Access all resources and materials on GitHub</span>
+                            <span class="lang-ar font-arabic">الوصول إلى جميع الموارد والمواد على GitHub</span>
+                        </p>
+                    </div>
+                </div>
+                <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main"
+                   class="inline-flex items-center gap-2 bg-white text-emerald-800 font-bold py-3 px-6 rounded-xl hover:bg-emerald-50 transition-colors shadow-md">
+                    <i class="fab fa-github text-lg"></i>
+                    <span class="lang-en">GitHub Repository</span>
+                    <span class="lang-ar font-arabic">مستودع GitHub</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== PREREQUISITES + AGENDA ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Prerequisites -->
+            <div class="card-lift bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-ocean-50 flex items-center justify-center">
+                        <i class="fas fa-clipboard-list text-2xl text-ocean-600"></i>
+                    </div>
+                    <div>
+                        <span class="section-label mb-1">
+                            <span class="lang-en">Requirements</span>
+                            <span class="lang-ar font-arabic">متطلبات</span>
+                        </span>
+                        <h3 class="font-bold text-2xl text-slate-900 mt-1">
+                            <span class="lang-en font-display">Pre-requisites</span>
+                            <span class="lang-ar font-arabic">المتطلبات المسبقة</span>
+                        </h3>
+                    </div>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-laptop text-ocean-600 text-xs"></i>
+                        </div>
+                        <span class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Computer (Linux/Windows/Mac) with internet connection and terminal access</span>
+                            <span class="lang-ar font-arabic">كمبيوتر (لينكس/ويندوز/ماك) مع اتصال بالإنترنت ونافذة الأوامر</span>
+                        </span>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fab fa-python text-ocean-600 text-xs"></i>
+                        </div>
+                        <span class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Basic Python programming knowledge (Pandas, NumPy libraries)</span>
+                            <span class="lang-ar font-arabic">معرفة أساسية بلغة البرمجة بايثون (مكتبات Pandas, NumPy)</span>
+                        </span>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 hover:bg-ocean-50 transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <i class="fas fa-box-open text-ocean-600 text-xs"></i>
+                        </div>
+                        <span class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Experience with Conda package manager</span>
+                            <span class="lang-ar font-arabic">وجود خبرة مسبقة بالعمل مع مدير حزم Conda</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Agenda -->
+            <div class="card-lift bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-royal-50 flex items-center justify-center">
+                        <i class="fas fa-calendar-day text-2xl text-royal-600"></i>
+                    </div>
+                    <div>
+                        <span class="section-label mb-1">
+                            <span class="lang-en">Schedule</span>
+                            <span class="lang-ar font-arabic">الجدول</span>
+                        </span>
+                        <h3 class="font-bold text-2xl text-slate-900 mt-1">
+                            <span class="lang-en font-display">Agenda</span>
+                            <span class="lang-ar font-arabic">جدول الأعمال</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-slate-100">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-royal-50 to-ocean-50">
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
+                                    <span class="lang-en">Time</span>
+                                    <span class="lang-ar font-arabic">الوقت</span>
+                                </th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
+                                    <span class="lang-en">Topic</span>
+                                    <span class="lang-ar font-arabic">الموضوع</span>
+                                </th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-royal-700">
+                                    <span class="lang-en">Speaker</span>
+                                    <span class="lang-ar font-arabic">المتحدث</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="agenda-row">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:00 – 2:10</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en">Welcome & Introduction</span>
+                                    <span class="lang-ar font-arabic">الترحيب والمقدمة</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                            <tr class="agenda-row">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:10 – 2:35</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en">Intro to Machine Learning (Core Concepts)</span>
+                                    <span class="lang-ar font-arabic">مقدمة في تعلم الآلة (المفاهيم الأساسية)</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                            <tr class="agenda-row bg-amber-50/50">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:35 – 2:55</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en"><i class="fas fa-flask text-amber-500 mr-1"></i> Real-Time Demos: ML in Action</span>
+                                    <span class="lang-ar font-arabic"><i class="fas fa-flask text-amber-500 ml-1"></i> عروض حية: تعلم الآلة قيد التنفيذ</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                            <tr class="agenda-row">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2:55 – 3:20</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en">Intro to Deep Learning & Neural Networks</span>
+                                    <span class="lang-ar font-arabic">مقدمة في التعلم العميق والشبكات العصبية</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                            <tr class="agenda-row bg-amber-50/50">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">3:20 – 3:45</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en"><i class="fas fa-eye text-amber-500 mr-1"></i> Real-Time Demos: DL & Computer Vision</span>
+                                    <span class="lang-ar font-arabic"><i class="fas fa-eye text-amber-500 ml-1"></i> عروض حية: التعلم العميق والرؤية الحاسوبية</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                            <tr class="agenda-row">
+                                <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">3:45 – 4:00</td>
+                                <td class="px-4 py-3 text-sm text-slate-800 font-medium">
+                                    <span class="lang-en">Conclusion & Q&A</span>
+                                    <span class="lang-ar font-arabic">الخاتمة والأسئلة</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-slate-600">
+                                    <span class="lang-en">Abdelghafour Halimi</span>
+                                    <span class="lang-ar font-arabic">عبد الغفور حليمي</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===================== OVERVIEW ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 py-8">
+        <div class="card-lift relative noise bg-gradient-to-br from-slate-900 via-midnight to-royal-900 p-10 rounded-2xl shadow-xl text-white overflow-hidden">
+            <div class="absolute top-0 right-0 w-72 h-72 bg-royal-500 rounded-full filter blur-[100px] opacity-20"></div>
+            <div class="absolute bottom-0 left-0 w-56 h-56 bg-ocean-500 rounded-full filter blur-[80px] opacity-15"></div>
+
+            <div class="relative z-10">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-lightbulb text-3xl text-amber-300"></i>
+                    </div>
+                    <div>
+                        <span class="section-label !text-amber-300 !bg-amber-300/10 !border-amber-300/20">
+                            <span class="lang-en">About</span>
+                            <span class="lang-ar font-arabic">حول</span>
+                        </span>
+                        <h2 class="font-bold text-3xl mt-1">
+                            <span class="lang-en font-display">Overview</span>
+                            <span class="lang-ar font-arabic">نظرة عامة</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="space-y-5 text-white/85 leading-relaxed">
+                    <!-- EN overview -->
+                    <div class="lang-en space-y-4">
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>This workshop provides a comprehensive introduction to the fundamental pillars of artificial intelligence: <strong class="text-white">Machine Learning and Deep Learning</strong>. It bridges the gap between traditional ML algorithms and the latest neural network developments.</span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>Attendees will gain foundational understanding of data-driven decision making, transitioning from simple classifiers to complex deep learning architectures.</span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-right text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>Whether you're curious about image classification, computer vision, or how AI models learn from data, this workshop with <strong class="text-white">real-time demonstrations</strong> is your gateway into the transformative world of ML and Deep Learning.</span>
+                        </p>
+                    </div>
+                    <!-- AR overview -->
+                    <div class="lang-ar space-y-4 font-arabic">
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>صُممت ورشة العمل هذه لتقديم مقدمة شاملة للركائز الأساسية للذكاء الاصطناعي: <strong class="text-white">تعلم الآلة والتعلم العميق</strong>. حيث ستسد الفجوة بين خوارزميات تعلم الآلة التقليدية وأحدث تطورات الشبكات العصبية.</span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>سيكتسب الحضور فهماً أساسياً لكيفية اتخاذ القرارات القائمة على البيانات، والانتقال من المصنفات البسيطة إلى معماريات التعلم العميق المعقدة.</span>
+                        </p>
+                        <p class="flex items-start gap-3">
+                            <i class="fas fa-chevron-left text-ocean-300 mt-1.5 text-xs flex-shrink-0"></i>
+                            <span>سواء كنت فضوليًا بشأن تصنيف الصور أو الرؤية الحاسوبية أو كيفية تعلم نماذج الذكاء الاصطناعي من البيانات، فإن ورشة العمل هذه مع <strong class="text-white">العروض التوضيحية الحية</strong> هي بوابتك إلى عالم تعلم الآلة والتعلم العميق.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== WHO SHOULD ATTEND ===================== -->
+    <div class="container mx-auto max-w-5xl px-4 py-8 mb-8">
+        <div class="card-lift bg-white p-10 rounded-2xl shadow-md">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 rounded-2xl bg-royal-50 flex items-center justify-center">
+                    <i class="fas fa-users text-3xl text-royal-600"></i>
+                </div>
+                <div>
+                    <span class="section-label mb-1">
+                        <span class="lang-en">Audience</span>
+                        <span class="lang-ar font-arabic">الجمهور</span>
+                    </span>
+                    <h2 class="font-bold text-3xl text-slate-900 mt-1">
+                        <span class="lang-en font-display">Who Should Attend?</span>
+                        <span class="lang-ar font-arabic">من يجب أن يحضر؟</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
+                            <i class="fas fa-user-graduate text-royal-600"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Anyone (beginner) wanting to understand the full spectrum of AI, from Machine Learning to Deep Learning</span>
+                            <span class="lang-ar font-arabic">أي شخص (مبتدئ) يرغب في فهم الطيف الكامل للذكاء الاصطناعي، من تعلم الآلة إلى التعلم العميق</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
+                            <i class="fas fa-code text-royal-600"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Programmers looking to expand their data science skills to increase their professional value</span>
+                            <span class="lang-ar font-arabic">المبرمجون الراغبون في توسيع مهاراتهم في علوم البيانات لزيادة قيمتهم المهنية</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
+                            <i class="fas fa-briefcase text-royal-600"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Entrepreneurs and professionals wanting to understand how to apply these powerful tools in their fields</span>
+                            <span class="lang-ar font-arabic">رواد الأعمال والمهنيون الراغبون في فهم كيفية تطبيق هذه الأدوات القوية في مجالاتهم</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="group p-5 rounded-xl border border-slate-100 hover:border-royal-200 hover:bg-royal-50/30 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-100 to-ocean-100 flex items-center justify-center flex-shrink-0 group-hover:from-royal-200 group-hover:to-ocean-200 transition-colors">
+                            <i class="fas fa-chalkboard-teacher text-royal-600"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            <span class="lang-en">Anyone wanting to learn from experts who don't just teach but have real-world experience</span>
+                            <span class="lang-ar font-arabic">أي شخص يريد أن يتعلم من خبراء لا يكتفون بالتدريس فقط بل لديهم خبرة عملية حقيقية</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="relative noise bg-midnight text-white py-12 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-royal-500/40 to-transparent"></div>
+        <div class="container mx-auto max-w-5xl px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-bold mb-1">
+                        <span class="lang-en font-display">AI Tools Workshop Series</span>
+                        <span class="lang-ar font-arabic">سلسلة ورشة عمل أدوات الذكاء الاصطناعي</span>
+                    </h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="lang-en">Empowering Knowledge in AI, Machine Learning & Deep Learning</span>
+                        <span class="lang-ar font-arabic">تمكين المعرفة في مجال الذكاء الاصطناعي وتعلم الآلة والتعلم العميق</span>
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-blue-600/30 flex items-center justify-center transition-colors border border-white/10">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/15 flex items-center justify-center transition-colors border border-white/10">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@kaustvislab/videos" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-red-600/30 flex items-center justify-center transition-colors border border-white/10">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-8 pt-6 border-t border-white/5 text-slate-500 text-xs">
+                <p>
+                    <span class="lang-en">&copy; 2026 Dr. Abdelghafour HALIMI. All rights reserved.</span>
+                    <span class="lang-ar font-arabic">&copy; 2026 د. عبد الغفور حليمي. جميع الحقوق محفوظة.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== SCROLL TO TOP ===================== -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+            class="fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-br from-ocean-600 to-royal-600 text-white rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center z-40"
+            id="scrollTop" style="display:none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        let currentLang = 'ar';
+
+        function setLangUI(lang) {
+            const html = document.documentElement;
+            const pill = document.getElementById('langPill');
+            const enLabel = document.getElementById('langEN');
+            const arLabel = document.getElementById('langAR');
+
+            if (lang === 'ar') {
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+                // Pill slides RIGHT to cover العربية
+                pill.style.left = 'calc(50%)';
+                enLabel.classList.remove('active');
+                enLabel.classList.add('inactive');
+                arLabel.classList.remove('inactive');
+                arLabel.classList.add('active');
+            } else {
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+                // Pill slides LEFT to cover English
+                pill.style.left = '3px';
+                enLabel.classList.remove('inactive');
+                enLabel.classList.add('active');
+                arLabel.classList.remove('active');
+                arLabel.classList.add('inactive');
+            }
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            setLangUI(currentLang);
+        }
+
+        // Scroll-to-top visibility
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+        });
+    </script>
+
+</body>
+</html>
