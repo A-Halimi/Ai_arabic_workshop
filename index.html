@@ -439,6 +439,17 @@
             color: var(--text-muted);
         }
 
+        /* ---- Light Theme: Scroll Indicator ---- */
+        html[data-theme="light"] .scroll-mouse {
+            border-color: rgba(0,0,0,0.25);
+        }
+        html[data-theme="light"] .scroll-mouse::before {
+            background: var(--accent-cyan);
+        }
+        html[data-theme="light"] .scroll-arrows i {
+            color: rgba(0,0,0,0.3);
+        }
+
         /* ---- Light Theme: Footer ---- */
         html[data-theme="light"] footer {
             background: #e5e5ea;
@@ -1406,7 +1417,7 @@
         }
         .scroll-indicator {
             position: absolute;
-            bottom: 100px;
+            bottom: 140px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
