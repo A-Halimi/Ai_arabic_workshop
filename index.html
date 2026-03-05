@@ -571,10 +571,27 @@
 
         /* Theme toggle responsive */
         @media (max-width: 768px) {
+            /* Theme toggle: always on the LEFT side on mobile to avoid lang toggle overlap */
             .theme-toggle-wrap { top: 16px; }
-            html[dir="rtl"] .theme-toggle-wrap { left: auto; right: 16px; }
-            html[dir="ltr"] .theme-toggle-wrap { right: auto; left: 16px; }
+            html[dir="rtl"] .theme-toggle-wrap { left: 16px; right: auto; }
+            html[dir="ltr"] .theme-toggle-wrap { left: 16px; right: auto; }
             .theme-toggle { width: 38px; height: 38px; font-size: 0.85rem; }
+
+            /* Scroll indicator: hide on tablet/mobile to avoid CTA overlap */
+            .scroll-indicator { display: none !important; }
+        }
+        @media (max-width: 480px) {
+            .theme-toggle-wrap { top: 14px; }
+            html[dir="rtl"] .theme-toggle-wrap { left: 14px; right: auto; }
+            html[dir="ltr"] .theme-toggle-wrap { left: 14px; right: auto; }
+            .theme-toggle { width: 36px; height: 36px; font-size: 0.8rem; }
+            /* Lang toggle: stays on the RIGHT side */
+            .lang-toggle-wrap { top: 14px; }
+            html[dir="rtl"] .lang-toggle-wrap { right: 14px; left: auto; }
+            html[dir="ltr"] .lang-toggle-wrap { right: 14px; left: auto; }
+            .lang-toggle-inner { width: 150px; height: 36px; }
+            .lang-toggle-pill { height: 30px; top: 3px; }
+            .lang-toggle-label { font-size: 0.72rem; gap: 4px; }
         }
 
         /* ---- Reset & Base ---- */
@@ -1725,21 +1742,202 @@
             color: var(--accent-cyan) !important;
         }
 
-        /* ---- Responsive ---- */
+        /* ============================================
+           RESPONSIVE — Tablet (max-width: 768px)
+           ============================================ */
         @media (max-width: 768px) {
-            .hero { min-height: auto; padding: 120px 0 80px; }
+            /* Hero */
+            .hero { min-height: auto; padding: 110px 0 70px; }
             .hero-title { font-size: 2.2rem !important; }
             .hero-sub { font-size: 1.6rem !important; }
+
+            /* CTA Buttons */
             .btn-primary, .btn-live { padding: 14px 24px; font-size: 0.85rem; }
             .cta-row { flex-direction: column; width: 100%; }
             .cta-row a { width: 100%; justify-content: center; }
+
+            /* Info Strip */
             .info-strip { flex-direction: column; }
+            .info-chip { width: 100%; justify-content: center; padding: 12px 16px; }
+
+            /* Stat Cards */
             .apple-stat { padding: 18px 16px 16px; }
-            .apple-overview { padding: 24px 18px; }
-            .banner-card img { height: 200px; }
+
+            /* Overview */
+            .apple-overview { padding: 26px 20px; }
+
+            /* Banners */
+            .banner-card img { height: 240px; }
+
+            /* Language Toggle */
             .lang-toggle-wrap { top: 16px; }
             html[dir="rtl"] .lang-toggle-wrap { right: 16px; left: auto; }
             html[dir="ltr"] .lang-toggle-wrap { right: 16px; }
+
+            /* Panels & GitHub */
+            .apple-panel { border-radius: var(--radius-lg); }
+            .apple-github { padding: 20px; border-radius: var(--radius-lg); }
+            .apple-github-icon { width: 44px !important; height: 44px !important; }
+
+            /* Timeline */
+            .timeline-item { padding: 12px 14px; }
+            .timeline-time { min-width: 70px !important; font-size: 0.7rem; }
+
+            /* Footer */
+            footer .container > div:first-child {
+                flex-direction: column;
+                text-align: center;
+            }
+            footer .container > div:first-child > div:last-child {
+                justify-content: center;
+            }
+
+            /* Orbs — tone down on tablet */
+            .orb { opacity: 0.6; }
+        }
+
+        /* ============================================
+           RESPONSIVE — Mobile (max-width: 480px)
+           ============================================ */
+        @media (max-width: 480px) {
+            /* Container */
+            .container { padding: 0 16px; }
+
+            /* Hero — compact for small phones */
+            .hero { padding: 100px 0 56px; }
+            .hero-title { font-size: 1.7rem !important; line-height: 1.3 !important; }
+            .hero-sub { font-size: 1.25rem !important; line-height: 1.35 !important; }
+
+            /* Badge */
+            .badge { font-size: 0.55rem; padding: 6px 14px; gap: 6px; }
+            html[dir="rtl"] .badge { font-size: 0.6rem; }
+
+            /* Hero subtitle */
+            .hero .container > p { margin-bottom: 28px !important; }
+            .hero .container > p span { font-size: 1rem !important; }
+
+            /* CTA Buttons — full width, stacked */
+            .btn-primary, .btn-live {
+                padding: 13px 20px;
+                font-size: 0.82rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Info Chips */
+            .info-chip { font-size: 0.8rem; padding: 10px 14px; }
+            .info-strip { gap: 8px; margin-bottom: 32px !important; }
+
+            /* Stat Cards */
+            .apple-stat { padding: 16px 14px 14px; border-radius: 16px; }
+            .apple-stat-icon { width: 36px; height: 36px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 12px; }
+            .apple-stat-title { font-size: 0.82rem; }
+            .apple-stat:hover { transform: none; }
+
+            /* Pill Buttons */
+            .apple-pill-btn { padding: 10px 14px; font-size: 0.72rem; }
+
+            /* Banner Images */
+            .banner-card img { height: 220px; }
+            .banner-card { border-radius: var(--radius-lg); }
+
+            /* Panels */
+            .apple-panel { padding: 20px !important; border-radius: 16px; }
+
+            /* Prerequisites */
+            .apple-prereq { padding: 12px; gap: 10px; }
+            .apple-prereq-icon { width: 28px; height: 28px; border-radius: 8px; font-size: 0.65rem; }
+            .apple-prereq span { font-size: 0.72rem !important; }
+            .apple-prereq:hover { transform: none; }
+
+            /* GitHub Card */
+            .apple-github { padding: 18px; border-radius: 16px; }
+            .apple-github-icon { width: 40px !important; height: 40px !important; border-radius: 12px !important; font-size: 1.1rem !important; }
+            .apple-github h3 { font-size: 0.95rem !important; }
+            .apple-github p { font-size: 0.75rem !important; }
+            .apple-github .apple-pill-btn { padding: 10px 18px; font-size: 0.72rem; }
+            .apple-github:hover { transform: none; }
+
+            /* Timeline */
+            .timeline-item { padding: 10px 12px; }
+            .timeline-item > div { gap: 8px !important; }
+            .timeline-time { min-width: 62px !important; font-size: 0.65rem; }
+            .timeline-item p[style*="font-weight:600"] { font-size: 0.76rem !important; }
+            .timeline-item p[style*="font-size:0.75rem"] { font-size: 0.68rem !important; }
+            .timeline-item:hover { transform: none; }
+
+            /* Overview */
+            .apple-overview { padding: 22px 16px; border-radius: 16px; }
+            .apple-overview h2 span { font-size: 1.4rem !important; }
+            .apple-overview p { font-size: 0.82rem; }
+            .apple-overview:hover { transform: none; }
+            .overview-dot { width: 5px; height: 5px; margin-top: 8px; }
+
+            /* Section Labels & Headers */
+            .section-label { font-size: 0.55rem; }
+            html[dir="rtl"] .section-label { font-size: 0.68rem; }
+
+            /* Audience / Feature Cards */
+            .apple-feature { padding: 16px; border-radius: 14px; }
+            .apple-feature-icon { width: 32px; height: 32px; border-radius: 8px; font-size: 0.75rem; }
+            .apple-feature p { font-size: 0.76rem !important; }
+            .apple-feature:hover { transform: none; }
+
+            /* Organizer Profile */
+            .organizer-profile { padding: 22px 16px !important; gap: 16px !important; }
+            .organizer-photo { width: 110px !important; border-radius: 16px !important; }
+            .organizer-info .organizer-name { font-size: 1.1rem; }
+            .organizer-info .organizer-title { font-size: 0.72rem; margin-bottom: 10px; }
+            .organizer-info .organizer-bio { font-size: 0.74rem; line-height: 1.65; margin-bottom: 14px; }
+            .organizer-info .organizer-label { font-size: 0.58rem; }
+            .organizer-profile:hover { transform: none; }
+
+            /* Contact Pills */
+            .contact-pill { font-size: 0.6rem; padding: 4px 8px; }
+
+            /* Footer */
+            footer .container { padding-top: 28px !important; padding-bottom: 28px !important; }
+            footer h3 span { font-size: 1.05rem !important; }
+            footer p { font-size: 0.7rem !important; }
+            .footer-social { width: 40px; height: 40px; border-radius: 12px; }
+
+            /* Scroll-to-top */
+            .scroll-top { width: 42px; height: 42px; border-radius: 12px; bottom: 18px; }
+            html[dir="rtl"] .scroll-top { left: 18px; }
+            html[dir="ltr"] .scroll-top { right: 18px; }
+
+            /* Disable hover lift effects on touch */
+            .apple-panel:hover { transform: none; }
+            .banner-card:hover { transform: none; }
+            .banner-card:hover img { transform: none; }
+
+            /* Orbs — reduce on small screens for performance */
+            .orb { opacity: 0.4; filter: blur(80px); }
+
+            /* Reduce grid gaps */
+            .grid-2 { gap: 12px !important; }
+            .grid-3 { gap: 10px !important; }
+            .grid-4 { gap: 10px !important; }
+        }
+
+        /* ============================================
+           RESPONSIVE — Very small (max-width: 360px)
+           ============================================ */
+        @media (max-width: 360px) {
+            .container { padding: 0 12px; }
+            .hero { padding: 90px 0 48px; }
+            .hero-title { font-size: 1.45rem !important; }
+            .hero-sub { font-size: 1.05rem !important; }
+            .badge { font-size: 0.5rem; padding: 5px 10px; }
+            .info-chip { font-size: 0.72rem; }
+            .btn-primary, .btn-live { padding: 12px 16px; font-size: 0.78rem; }
+            .apple-stat-title { font-size: 0.78rem; }
+            .lang-toggle-inner { width: 145px; height: 36px; }
+            .lang-toggle-pill { height: 30px; }
+            .lang-toggle-label { font-size: 0.72rem; }
+            .organizer-photo { width: 96px !important; }
+            .organizer-info .organizer-name { font-size: 1rem; }
+            .apple-overview p { font-size: 0.76rem; }
         }
     </style>
 </head>
@@ -1829,11 +2027,11 @@
 
             <!-- CTA Buttons -->
             <div class="anim-fade-up anim-delay-4 cta-row" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-                <a href="https://kaustforms.formstack.com/forms/a_i_workshop_series_introduction_machine_learning_2026_arabic_version" class="btn-primary">
+                <a href="https://kaustforms.formstack.com/forms/a_i_workshop_series_introduction_machine_learning_2026_arabic_version" class="btn-primary" target="_blank" rel="noopener noreferrer">
                     <span class="lang-en"><i class="fas fa-user-plus"></i> <span>Register Now</span></span>
                     <span class="lang-ar" style="font-family:var(--font-arabic)"><span>سجّل الآن</span> <i class="fas fa-user-plus"></i></span>
                 </a>
-                <a href="https://www.youtube.com/watch?v=6F2NnAYI4Dk" class="btn-live">
+                <a href="https://www.youtube.com/watch?v=6F2NnAYI4Dk" class="btn-live" target="_blank" rel="noopener noreferrer">
                     <span class="lang-en"><i class="fas fa-play-circle"></i> <span>Join Livestream</span></span>
                     <span class="lang-ar" style="font-family:var(--font-arabic)"><span>انضم للبث المباشر</span> <i class="fas fa-play-circle"></i></span>
                 </a>
@@ -1904,7 +2102,7 @@
                         <span class="lang-en">YouTube LIVE Session</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">جلسة بث مباشر على يوتيوب</span>
                     </p>
-                    <a href="https://www.youtube.com/watch?v=6F2NnAYI4Dk" class="apple-pill-btn rose-fill">
+                    <a href="https://www.youtube.com/watch?v=6F2NnAYI4Dk" class="apple-pill-btn rose-fill" target="_blank" rel="noopener noreferrer">
                         <span class="lang-en"><i class="fas fa-play-circle" style="margin-right:4px;"></i> Join Livestream</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">انضم للبث <i class="fas fa-play-circle" style="margin-right:4px;"></i></span>
                     </a>
@@ -1925,7 +2123,7 @@
                         <span class="lang-en">Secure your spot for this workshop</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">احجز مقعدك في ورشة العمل</span>
                     </p>
-                    <a href="https://kaustforms.formstack.com/forms/a_i_workshop_series_introduction_machine_learning_2026_arabic_version" class="apple-pill-btn cyan-fill">
+                    <a href="https://kaustforms.formstack.com/forms/a_i_workshop_series_introduction_machine_learning_2026_arabic_version" class="apple-pill-btn cyan-fill" target="_blank" rel="noopener noreferrer">
                         <span class="lang-en"><i class="fas fa-sign-in-alt" style="margin-right:4px;"></i> Register Now</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">سجّل الآن <i class="fas fa-sign-in-alt" style="margin-right:4px;"></i></span>
                     </a>
@@ -1957,17 +2155,17 @@
                     <span class="lang-ar" style="font-family:var(--font-arabic)">حاصل على دكتوراه في الذكاء الاصطناعي ومعالجة الصور من المعهد الوطني للفنون التطبيقية في تولوز، فرنسا (ماجستير 2014، دكتوراه 2017)، مع أكثر من 10 سنوات من الخبرة في الذكاء الاصطناعي وعلوم البيانات. عالم بيانات سابق في ATOS (2018–2023)، مع مساهمات صناعية في فرنسا مع مؤسسات مثل Pierre Fabre وAirbus وCNES ووكالة الفضاء الأوروبية (ESA) — في مجالات الاستشعار عن بُعد والتصوير الطبي والرؤية الحاسوبية.</span>
                 </p>
                 <div class="organizer-links">
-                    <a href="mailto:abdelghafour.halimi@kaust.edu.sa" class="contact-pill gold">
+                    <a href="mailto:abdelghafour.halimi@kaust.edu.sa" class="contact-pill gold" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-envelope"></i>
                         <span class="lang-en">Email</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">بريد</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="contact-pill blue">
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="contact-pill blue" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-linkedin"></i>
                         <span class="lang-en">LinkedIn</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">لينكدإن</span>
                     </a>
-                    <a href="https://www.ahalimi.com" class="contact-pill violet">
+                    <a href="https://www.ahalimi.com" class="contact-pill violet" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-globe"></i>
                         <span class="lang-en">Website</span>
                         <span class="lang-ar" style="font-family:var(--font-arabic)">الموقع</span>
@@ -2046,7 +2244,7 @@
                                 <span class="lang-ar" style="font-family:var(--font-arabic)">الوصول إلى جميع الموارد والمواد على GitHub</span>
                             </p>
                         </div>
-                        <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="apple-pill-btn ghost" style="padding:11px 24px;white-space:nowrap;width:auto;">
+                        <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="apple-pill-btn ghost" style="padding:11px 24px;white-space:nowrap;width:auto;" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github"></i>
                             <span class="lang-en">GitHub Repository</span>
                             <span class="lang-ar" style="font-family:var(--font-arabic)">مستودع GitHub</span>
@@ -2303,13 +2501,13 @@
                     </p>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="footer-social">
+                    <a href="https://www.linkedin.com/in/abdelghafour-halimi/" class="footer-social" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="footer-social">
+                    <a href="https://github.com/A-Halimi/Introduction-to-AI-workshop-series/tree/main" class="footer-social" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.youtube.com/@kaustvislab/videos" class="footer-social">
+                    <a href="https://www.youtube.com/@kaustvislab/videos" class="footer-social" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
